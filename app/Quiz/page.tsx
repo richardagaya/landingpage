@@ -1,9 +1,10 @@
-"use client"
-import { useState, useEffect } from "react";
+"use client";
+import { useState } from "react";
 import CreatorthonQuiz from "../components/CreatorthonQuiz";
 import TraderthonQuiz from "../components/TraderthonQuiz";
 import SellathonQuiz from "../components/SellathonQuiz";
 import HackathonQuiz from "../components/HackathonQuiz";
+import Navbar from "../components/Navbar";
 
 interface Question {
   question: string;
@@ -23,7 +24,7 @@ const Quiz: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
   const [progress, setProgress] = useState(0);
-  const [loading, setLoading] = useState(false); // State for loading spinner
+  const [loading, setLoading] = useState(false);
 
   const handleAnswerSelect = (answer: string) => {
     setSelectedAnswers((prev) => [...prev, answer]);
@@ -34,12 +35,11 @@ const Quiz: React.FC = () => {
       setProgress(((currentQuestionIndex + 1) / generalQuestions.length) * 100);
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // Trigger category determination and loading spinner
       setLoading(true);
       setTimeout(() => {
         determineCategory();
-        setLoading(false); // Hide the spinner after category determination
-      }, 1000); // Simulate loading time
+        setLoading(false);
+      }, 1000);
     }
   };
 
@@ -75,39 +75,39 @@ const Quiz: React.FC = () => {
     const currentQuestion = generalQuestions[currentQuestionIndex];
 
     return (
-      <div className="max-w-lg mx-auto p-6">
-        {/* Progress Bar */}
-        <div className="mb-4">
-          <div className="h-2 bg-gray-300 rounded-full">
-            <div className="h-2 bg-blue-500 rounded-full" style={{ width: `${progress}%` }} />
+      <>
+        <div className="max-w-lg mx-auto p-6">
+          <div className="mb-4">
+            <div className="h-2 bg-gray-300 rounded-full">
+              <div className="h-2 bg-blue-500 rounded-full" style={{ width: `${progress}%` }} />
+            </div>
           </div>
-        </div>
 
-        {/* General Quiz Questions */}
-        <div>
-          <h2 className="text-xl font-semibold mb-4">{currentQuestion.question}</h2>
-          <div className="space-y-4">
-            {currentQuestion.options.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => handleAnswerSelect(option)}
-                className={`w-full p-3 border rounded-md text-left ${
-                  selectedAnswers.includes(option) ? "bg-blue-500 text-white" : "bg-white hover:bg-gray-100"
-                }`}
-              >
-                {option}
-              </button>
-            ))}
+          <div>
+            <h2 className="text-xl font-semibold mb-4">{currentQuestion.question}</h2>
+            <div className="space-y-4">
+              {currentQuestion.options.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleAnswerSelect(option)}
+                  className={`w-full p-3 border rounded-md text-left ${
+                    selectedAnswers.includes(option) ? "bg-blue-500 text-white" : "bg-white hover:bg-gray-100"
+                  }`}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={handleNextQuestion}
+              className="mt-6 w-full p-3 bg-green-500 text-white rounded-md"
+              disabled={selectedAnswers.length <= currentQuestionIndex || selectedAnswers.includes(currentQuestion.options[0])}
+            >
+              {currentQuestionIndex === generalQuestions.length - 1 ? "Submit" : "Next Question"}
+            </button>
           </div>
-          <button
-            onClick={handleNextQuestion}
-            className="mt-6 w-full p-3 bg-green-500 text-white rounded-md"
-            disabled={selectedAnswers.length <= currentQuestionIndex}
-          >
-            {currentQuestionIndex === generalQuestions.length - 1 ? "Submit" : "Next Question"}
-          </button>
         </div>
-      </div>
+      </>
     );
   };
 

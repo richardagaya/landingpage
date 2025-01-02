@@ -8,32 +8,32 @@ const Navbar: React.FC = () => {
   return (
     <div className="relative">
       {/* Top Banner */}
-      <div className="bg-purple-600 text-white text-sm py-2 px-4 text-center">
+      <div className="bg-darkblue text-white text-sm py-2 px-4 text-center">
         NEW: <strong>SIX FIGURE CEO ROADMAP:</strong> Get a free personalised $0 to $150k a month business roadmap →
       </div>
 
       {/* Navbar */}
-      <nav className="bg-gray-900 text-white py-4 px-6">
-        <div className="container mx-auto flex justify-between items-center">
+      <nav className="bg-black text-white py-4 px-6">
+        <div className="max-w-screen-xl mx-auto flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <img
-              src="/logo.jpg" // Replace with your logo
+              src="/logo.jpg" // Replace with your logo path
               alt="Logo"
-              className="h-8"
+              className="h-10 md:h-12" // Adjust logo size for mobile vs desktop
             />
-            <span className="text-xl font-bold">ONTRACC</span>
+            <span className="text-xl font-bold text-gold">ONTRACC</span>
           </div>
 
           {/* Desktop Links */}
-          <ul className="hidden md:flex space-x-8">
-            <li className="hover:text-purple-500 cursor-pointer">Workshops</li>
-            <li className="hover:text-purple-500 cursor-pointer">Courses</li>
-            <li className="hover:text-purple-500 cursor-pointer">Books</li>
-            <li className="hover:text-purple-500 cursor-pointer">Media</li>
-            <li className="hover:text-purple-500 cursor-pointer">Partner With Us</li>
-            <li className="hover:text-purple-500 cursor-pointer">About the Firm</li>
-            <li className="hover:text-purple-500 cursor-pointer">Careers</li>
+          <ul className="hidden md:flex space-x-6">
+            <li className="hover:text-gold cursor-pointer">Workshops</li>
+            <li className="hover:text-gold cursor-pointer">Courses</li>
+            <li className="hover:text-gold cursor-pointer">Books</li>
+            <li className="hover:text-gold cursor-pointer">Media</li>
+            <li className="hover:text-gold cursor-pointer">Partner With Us</li>
+            <li className="hover:text-gold cursor-pointer">About the Firm</li>
+            <li className="hover:text-gold cursor-pointer">Careers</li>
           </ul>
 
           {/* Hamburger Button */}
@@ -49,19 +49,19 @@ const Navbar: React.FC = () => {
           </button>
         </div>
 
-        {/* Mobile Dropdown without Animation */}
+        {/* Mobile Dropdown */}
         <ul
           className={`${
             isOpen ? "block" : "hidden"
-          } bg-gray-900 text-white flex flex-col items-center space-y-4 py-4 md:hidden transition-all duration-300`}
+          } bg-black text-white flex flex-col items-center space-y-4 py-4 md:hidden`}
         >
-          <li className="hover:text-purple-500 cursor-pointer">Workshops</li>
-          <li className="hover:text-purple-500 cursor-pointer">Courses</li>
-          <li className="hover:text-purple-500 cursor-pointer">Books</li>
-          <li className="hover:text-purple-500 cursor-pointer">Media</li>
-          <li className="hover:text-purple-500 cursor-pointer">Partner With Us</li>
-          <li className="hover:text-purple-500 cursor-pointer">About the Firm</li>
-          <li className="hover:text-purple-500 cursor-pointer">Careers</li>
+          <li className="hover:text-gold cursor-pointer">Workshops</li>
+          <li className="hover:text-gold cursor-pointer">Courses</li>
+          <li className="hover:text-gold cursor-pointer">Books</li>
+          <li className="hover:text-gold cursor-pointer">Media</li>
+          <li className="hover:text-gold cursor-pointer">Partner With Us</li>
+          <li className="hover:text-gold cursor-pointer">About the Firm</li>
+          <li className="hover:text-gold cursor-pointer">Careers</li>
         </ul>
       </nav>
     </div>

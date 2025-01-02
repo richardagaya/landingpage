@@ -11,6 +11,8 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        gold: "#FFD700", // Matches your logo's gold
+        darkblue: "#020D23",
       },
     },
   },
