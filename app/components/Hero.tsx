@@ -3,7 +3,7 @@ import React from "react";
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="bg-black text-center py-16 px-8">
+    <section className="bg-darkblue text-center py-16 px-8">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 items-center gap-8">
         {/* Left Image */}
         <div className="hidden md:block">

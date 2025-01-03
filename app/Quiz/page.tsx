@@ -1,148 +1,103 @@
 "use client";
+
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+  useSortable,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
-import CreatorthonQuiz from "../components/CreatorthonQuiz";
-import TraderthonQuiz from "../components/TraderthonQuiz";
-import SellathonQuiz from "../components/SellathonQuiz";
-import HackathonQuiz from "../components/HackathonQuiz";
-import Navbar from "../components/Navbar";
 
-interface Question {
-  question: string;
-  options: string[];
-}
+const Quiz = () => {
+  const [items, setItems] = useState([
+    { id: "1", text: "See happening" },
+    { id: "2", text: "Hear from others" },
+    { id: "3", text: "Read in reports" },
+    { id: "4", text: "Experience now" },
+    { id: "5", text: "Do myself" },
+  ]);
 
-const generalQuestions: Question[] = [
-  { question: "What excites you the most?", options: ["Creating content", "Trading stocks", "Selling products", "Building tech solutions"] },
-  { question: "Which of these interests you most?", options: ["Video editing", "Stock analysis", "E-commerce", "Coding and problem-solving"] },
-  { question: "How do you prefer working?", options: ["On creative projects", "On financial markets", "On online sales", "On technology and development"] },
-  { question: "What do you enjoy doing in your free time?", options: ["Filming or designing", "Reading market trends", "Managing a business", "Building apps or websites"] },
-  { question: "Which skill would you like to improve?", options: ["Content creation", "Stock trading", "Sales and marketing", "Tech development"] },
-];
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    })
+  );
 
-const Quiz: React.FC = () => {
-  const [category, setCategory] = useState<string | null>(null);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
-  const [progress, setProgress] = useState(0);
-  const [loading, setLoading] = useState(false);
-
-  const handleAnswerSelect = (answer: string) => {
-    setSelectedAnswers((prev) => [...prev, answer]);
-  };
-
-  const handleNextQuestion = () => {
-    if (currentQuestionIndex < generalQuestions.length - 1) {
-      setProgress(((currentQuestionIndex + 1) / generalQuestions.length) * 100);
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      setLoading(true);
-      setTimeout(() => {
-        determineCategory();
-        setLoading(false);
-      }, 1000);
-    }
-  };
-
-  const determineCategory = () => {
-    const answers = selectedAnswers;
-    const categoryVotes = {
-      creatorthon: 0,
-      traderthon: 0,
-      sellathon: 0,
-      hackathon: 0,
-    };
-
-    answers.forEach((answer) => {
-      if (answer.includes("content") || answer.includes("design")) {
-        categoryVotes.creatorthon += 1;
-      }
-      if (answer.includes("stock")) {
-        categoryVotes.traderthon += 1;
-      }
-      if (answer.includes("selling") || answer.includes("business")) {
-        categoryVotes.sellathon += 1;
-      }
-      if (answer.includes("tech") || answer.includes("coding")) {
-        categoryVotes.hackathon += 1;
-      }
-    });
-
-    const maxCategory = (Object.keys(categoryVotes) as (keyof typeof categoryVotes)[]).reduce((a, b) => (categoryVotes[a] > categoryVotes[b] ? a : b));
-    setCategory(maxCategory);
-  };
-
-  const renderGeneralQuiz = () => {
-    const currentQuestion = generalQuestions[currentQuestionIndex];
-
-    return (
-      <>
-        <div className="max-w-lg mx-auto p-6">
-          <div className="mb-4">
-            <div className="h-2 bg-gray-300 rounded-full">
-              <div className="h-2 bg-blue-500 rounded-full" style={{ width: `${progress}%` }} />
-            </div>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-semibold mb-4">{currentQuestion.question}</h2>
-            <div className="space-y-4">
-              {currentQuestion.options.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleAnswerSelect(option)}
-                  className={`w-full p-3 border rounded-md text-left ${
-                    selectedAnswers.includes(option) ? "bg-blue-500 text-white" : "bg-white hover:bg-gray-100"
-                  }`}
-                >
-                  {option}
-                </button>
-              ))}
-            </div>
-            <button
-              onClick={handleNextQuestion}
-              className="mt-6 w-full p-3 bg-green-500 text-white rounded-md"
-              disabled={selectedAnswers.length <= currentQuestionIndex || selectedAnswers.includes(currentQuestion.options[0])}
-            >
-              {currentQuestionIndex === generalQuestions.length - 1 ? "Submit" : "Next Question"}
-            </button>
-          </div>
-        </div>
-      </>
-    );
-  };
-
-  const renderCategoryQuiz = () => {
-    switch (category) {
-      case "creatorthon":
-        return <CreatorthonQuiz onNext={() => {}} currentQuestionIndex={0} progress={100} />;
-      case "traderthon":
-        return <TraderthonQuiz onNext={() => {}} currentQuestionIndex={0} progress={100} />;
-      case "sellathon":
-        return <SellathonQuiz onNext={() => {}} currentQuestionIndex={0} progress={100} />;
-      case "hackathon":
-        return <HackathonQuiz onNext={() => {}} currentQuestionIndex={0} progress={100} />;
-      default:
-        return null;
+  const handleDragEnd = ({ active, over }: any) => {
+    if (active.id !== over?.id) {
+      setItems((prev) => {
+        const oldIndex = prev.findIndex((item) => item.id === active.id);
+        const newIndex = prev.findIndex((item) => item.id === over?.id);
+        return arrayMove(prev, oldIndex, newIndex);
+      });
     }
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6">
-      {!category ? (
-        renderGeneralQuiz()
-      ) : (
-        <div>
-          <h2 className="text-xl font-semibold mb-4">You are being directed to your path...</h2>
-          {loading ? (
-            <div className="flex justify-center items-center space-x-2">
-              <div className="w-8 h-8 border-4 border-t-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
-              <span>Loading...</span>
+    <div className="min-h-screen flex items-center justify-center bg-gray-900">
+      <div className="w-96 bg-gray-800 text-white p-6 rounded-lg shadow-lg">
+        <h2 className="text-xl font-semibold mb-2">Question 1/4</h2>
+        <p className="mb-4 text-gray-300">
+          At work, I am convinced because of what I...
+        </p>
+        <p className="mb-4 text-sm text-gray-400">
+          Place the questions in order of most like you to least like you.
+        </p>
+
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={items.map((item) => item.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            <div className="space-y-2">
+              {items.map((item) => (
+                <SortableItem key={item.id} id={item.id} text={item.text} />
+              ))}
             </div>
-          ) : (
-            renderCategoryQuiz()
-          )}
-        </div>
-      )}
+          </SortableContext>
+        </DndContext>
+
+        <button className="mt-4 w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-md">
+          Next
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const SortableItem = ({ id, text }: { id: string; text: string }) => {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="bg-gray-700 p-3 rounded-md flex justify-between items-center"
+    >
+      <span>{text}</span>
+      <span className="text-gray-400 cursor-move">⋮⋮</span>
     </div>
   );
 };
