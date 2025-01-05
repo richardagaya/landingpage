@@ -8,7 +8,7 @@ const HeroSection: React.FC = () => {
         {/* Left Image */}
         <div className="hidden md:block">
           <img
-            src="/images/left-person.png" // Replace with your actual image path
+            src="1.png" // Replace with your actual image path
             alt="Left Person"
             className="w-full h-auto"
           />
@@ -17,15 +17,15 @@ const HeroSection: React.FC = () => {
         {/* Center Content */}
         <div className="md:col-span-1 text-center">
           <h1 className="text-4xl font-extrabold text-gold leading-tight mb-4">
-            DO YOU WANT TO SCALE YOUR BUSINESS?
+            TAKE A STEP TO YOUR FINANCIAL FREEDOM👇?
           </h1>
           <p className="text-lg text-gray-300 mb-6">
-            Learn from the team that has built a portfolio of over <span className="text-gold">$500M+</span> in
-            less than 4 years.
+            Learn from a coach  that has built a network of over <span className="text-gold">50+</span> students in
+            less than 2 years.
           </p>
           <Link href="./Quiz">
             <button className="bg-gold text-black font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-yellow-500 transition-all">
-              GET MY CUSTOMIZED ROADMAP
+              TAKE THE QUIZ
             </button>
           </Link>
         </div>
@@ -33,7 +33,7 @@ const HeroSection: React.FC = () => {
         {/* Right Image */}
         <div className="hidden md:block">
           <img
-            src="/images/right-person.png" // Replace with your actual image path
+            src="2.png" // Replace with your actual image path
             alt="Right Person"
             className="w-full h-auto"
           />

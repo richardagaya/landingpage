@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
     <div className="relative">
       {/* Top Banner */}
       <div className="bg-darkblue text-white text-sm py-2 px-4 text-center">
-        NEW: <strong>SIX FIGURE CEO ROADMAP:</strong> Get a free personalised $0 to $150k a month business roadmap →
+         <strong>SIX FIGURE CEO ROADMAP:</strong> Get a free personalised $0 to $150k a month business roadmap →
       </div>
 
       {/* Navbar */}
@@ -30,10 +30,8 @@ const Navbar: React.FC = () => {
             <li className="hover:text-gold cursor-pointer">Workshops</li>
             <li className="hover:text-gold cursor-pointer">Courses</li>
             <li className="hover:text-gold cursor-pointer">Books</li>
-            <li className="hover:text-gold cursor-pointer">Media</li>
-            <li className="hover:text-gold cursor-pointer">Partner With Us</li>
-            <li className="hover:text-gold cursor-pointer">About the Firm</li>
-            <li className="hover:text-gold cursor-pointer">Careers</li>
+            <li className="hover:text-gold cursor-pointer">About</li>
+            <li className="hover:text-gold cursor-pointer">Connect</li>
           </ul>
 
           {/* Hamburger Button */}
@@ -59,9 +57,6 @@ const Navbar: React.FC = () => {
           <li className="hover:text-gold cursor-pointer">Courses</li>
           <li className="hover:text-gold cursor-pointer">Books</li>
           <li className="hover:text-gold cursor-pointer">Media</li>
-          <li className="hover:text-gold cursor-pointer">Partner With Us</li>
-          <li className="hover:text-gold cursor-pointer">About the Firm</li>
-          <li className="hover:text-gold cursor-pointer">Careers</li>
         </ul>
       </nav>
     </div>
