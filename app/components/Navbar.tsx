@@ -8,7 +8,7 @@ const Navbar: React.FC = () => {
   return (
     <div className="relative">
       {/* Top Banner */}
-      <div className="bg-darkblue text-white text-sm py-2 px-4 text-center">
+      <div className="bg-gold text-darkblue text-sm py-2 px-4 text-center">
          <strong>SIX FIGURE CEO ROADMAP:</strong> Get a free personalised $0 to $150k a month business roadmap →
       </div>
 
@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
 
           {/* Desktop Links */}
           <ul className="hidden md:flex space-x-6">
-            <li className="hover:text-gold cursor-pointer">Workshops</li>
+            <li className="hover:text-gold cursor-pointer">Testimonials</li>
             <li className="hover:text-gold cursor-pointer">Courses</li>
             <li className="hover:text-gold cursor-pointer">Books</li>
             <li className="hover:text-gold cursor-pointer">About</li>
@@ -53,10 +53,10 @@ const Navbar: React.FC = () => {
             isOpen ? "block" : "hidden"
           } bg-black text-white flex flex-col items-center space-y-4 py-4 md:hidden`}
         >
-          <li className="hover:text-gold cursor-pointer">Workshops</li>
+          <li className="hover:text-gold cursor-pointer">Testimonials</li>
           <li className="hover:text-gold cursor-pointer">Courses</li>
           <li className="hover:text-gold cursor-pointer">Books</li>
-          <li className="hover:text-gold cursor-pointer">Media</li>
+          <li className="hover:text-gold cursor-pointer">About</li>
         </ul>
       </nav>
     </div>
