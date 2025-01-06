@@ -5,6 +5,7 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
+  DragEndEvent,
 } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -14,6 +15,11 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
+
+type Answer = {
+  id: string;
+  text: string;
+};
 
 const questions = [
   {
@@ -60,7 +66,7 @@ const questions = [
 
 const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [items, setItems] = useState(questions[currentQuestion].answers);
+  const [items, setItems] = useState<Answer[]>(questions[currentQuestion].answers);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -70,7 +76,7 @@ const Quiz = () => {
     })
   );
 
-  const handleDragEnd = ({ active, over }: { active: any; over: any }) => {
+  const handleDragEnd = ({ active, over }: DragEndEvent) => {
     if (active.id !== over?.id) {
       setItems((prev) => {
         const oldIndex = prev.findIndex((item) => item.id === active.id);
@@ -107,7 +113,10 @@ const Quiz = () => {
           </SortableContext>
         </DndContext>
 
-        <button className="mt-4 w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-md" onClick={goToNextQuestion}>
+        <button
+          className="mt-4 w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-md"
+          onClick={goToNextQuestion}
+        >
           Next
         </button>
       </div>
