@@ -1,42 +1,36 @@
-import Link from "next/link";
-import React from "react";
+// components/HeroSection.tsx
 
-const HeroSection: React.FC = () => {
+import Image from 'next/image';
+
+const HeroSection = () => {
   return (
-    <section className="bg-darkblue text-center py-16 px-8">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 items-center gap-8">
-        {/* Left Image */}
-        <div className="hidden md:block">
-          <img
-            src="" // Replace with your actual image path
-            alt="Left Person"
-            className="w-full h-auto"
-          />
-        </div>
-
-        {/* Center Content */}
-        <div className="md:col-span-1 text-center">
-          <h1 className="text-3xl font-extrabold text-gold leading-tight mb-4">
-           WANT TO  TAKE A STEP TOWARDS  FINANCIAL FREEDOM👇?
+    <section className="relative bg-gradient-to-r from-hero via-indigo-600 to-purple-700 text-white">
+      <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-6 py-16 space-y-8 md:space-y-0">
+        {/* Text Content */}
+        <div className="flex flex-col items-center md:items-start md:w-1/2 text-center md:text-left">
+          <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+            Learn from the best <br /> coaches in the industry
           </h1>
-          <p className="text-lg text-gray-300 mb-6">
-            Learn from a coach  that has built a network of over <span className="text-gold">50+</span> students in
-            less than 2 years.
+          <p className="mt-4 text-lg md:text-xl">
+            Learn from a team of qualified coaches to help you achieve your goals
           </p>
-          <Link href="./Quiz">
-            <button className="bg-gold text-darkblue font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-yellow-500 transition-all">
-              TAKE THE QUIZ
+          <div className="mt-6 flex gap-4">
+            <button className="px-6 py-3 bg-white text-indigo-600 font-semibold rounded-md shadow-md hover:bg-indigo-50 transition">
+              Join us
             </button>
-          </Link>
+          </div>
         </div>
 
-        {/* Right Image */}
-        <div className="hidden md:block">
-          <img
-            src="" // Replace with your actual image path
-            alt="Right Person"
-            className="w-full h-auto"
+        {/* Coach Image */}
+        <div className="md:w-1/2 relative">
+          <Image
+            src="/person2.png" // Replace with your coach's image
+            alt="Coach"
+            width={500}
+            height={500}
+            className="rounded-full shadow-lg object-cover z-10"
           />
+          <div className="absolute -z-10 top-0 left-0 w-full h-full bg-gradient-to-br from-white/30 to-indigo-600 rounded-full blur-3xl"></div>
         </div>
       </div>
     </section>

@@ -12,6 +12,7 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         gold: "#FFD700", // Matches your logo's gold
+        hero: "#011631",
         darkblue: "#020D23",
       },
     },

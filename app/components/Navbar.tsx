@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Navbar */}
-      <nav className="bg-black text-white py-4 px-6">
+      <nav className="bg-darkblue text-white py-4 px-6">
         <div className="max-w-screen-xl mx-auto flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center space-x-3">
@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
         <ul
           className={`${
             isOpen ? "block" : "hidden"
-          } bg-black text-white flex flex-col items-center space-y-4 py-4 md:hidden`}
+          } bg-darkblue text-white flex flex-col items-center space-y-4 py-4 md:hidden`}
         >
           <li className="hover:text-gold cursor-pointer">Testimonials</li>
           <li className="hover:text-gold cursor-pointer">Courses</li>
