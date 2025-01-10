@@ -15,7 +15,7 @@ export default {
         gold: "#FFD700", // Matches your logo's gold
         hero: "#011631",
         darkblue: "#020D23",
-        lightblue: "#ADD8E6",
+        lightblue: "#00008B",
       },
     },
   },
