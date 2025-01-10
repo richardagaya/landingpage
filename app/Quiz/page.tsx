@@ -32,14 +32,34 @@ const questions = [
       { id: "5", text: "Tony Robbins" },
     ],
   },
-  // Additional questions...
+  {
+    questionText:
+      "It takes 1000 hours to gain financial freedom in any skill, Which of these industries do you have the most experience in?",
+    answers: [
+      { id: "6", text: "Ecommerce" },
+      { id: "7", text: "Sales" },
+      { id: "8", text: "Content creation" },
+      { id: "9", text: "Software development" },
+      { id: "10", text: "Trading" },
+    ],
+  },
+  {
+    questionText: "Which industry would you be most excited to gain skill in?",
+    answers: [
+      { id: "11", text: "Ecommerce" },
+      { id: "12", text: "Sales" },
+      { id: "13", text: "Content Creation" },
+      { id: "14", text: "Software development" },
+      { id: "15", text: "Trading" },
+    ],
+  },
 ];
 
 const Quiz = () => {
   const [stage, setStage] = useState<"nameInput" | "intro" | "loading" | "quiz">("nameInput");
   const [userName, setUserName] = useState<string>("");
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<Answer[]>(questions[currentQuestion].answers);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState<Answer[]>(questions[currentQuestionIndex].answers);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -69,10 +89,10 @@ const Quiz = () => {
   };
 
   const goToNextQuestion = () => {
-    const nextQuestion = currentQuestion + 1;
-    if (nextQuestion < questions.length) {
-      setCurrentQuestion(nextQuestion);
-      setAnswers(questions[nextQuestion].answers);
+    const nextQuestionIndex = currentQuestionIndex + 1;
+    if (nextQuestionIndex < questions.length) {
+      setCurrentQuestionIndex(nextQuestionIndex);
+      setAnswers(questions[nextQuestionIndex].answers);
     } else {
       alert("Quiz Completed!");
     }
@@ -140,8 +160,10 @@ const Quiz = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="w-96 bg-gray-800 text-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl font-semibold mb-2">Question {currentQuestion + 1}/3</h2>
-        <p className="mb-4 text-gray-300">{questions[currentQuestion].questionText}</p>
+        <h2 className="text-xl font-semibold mb-2">
+          Question {currentQuestionIndex + 1}/{questions.length}
+        </h2>
+        <p className="mb-4 text-gray-300">{questions[currentQuestionIndex].questionText}</p>
         <p className="mb-4 text-sm text-gray-400">
           Place the options in order of most like you to least like you.
         </p>
@@ -160,7 +182,7 @@ const Quiz = () => {
           className="mt-4 w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-md"
           onClick={goToNextQuestion}
         >
-          {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
+          {currentQuestionIndex === questions.length - 1 ? "Finish" : "Next"}
         </button>
       </div>
     </div>
