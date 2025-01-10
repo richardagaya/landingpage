@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-gradient-to-r from-hero via-indigo-600 to-lightblue text-white">
+    <section className="relative bg-gradient-to-r from-hero via-middle to-lightblue text-white">
       <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-6 py-16 space-y-8 md:space-y-0">
         {/* Text Content */}
         <div className="flex flex-col items-center md:items-start md:w-1/2 text-center md:text-left">
@@ -13,11 +13,11 @@ const HeroSection = () => {
             Get your path today <br /> to a successful business!
           </h1>
           <p className="mt-4 text-lg md:text-xl">
-            Chosing the right industry and business model BEFORE you embark on the adventure of developing ypur income skills will save you months and YEARS!
+            Chosing the right industry and business model BEFORE you embark on the adventure of developing your income skills will save you months and YEARS!
           </p>
           <div className="mt-6 flex gap-4">
             <Link href="/Quiz" passHref>
-              <button className="px-6 py-3 bg-white text-indigo-600 font-semibold rounded-md shadow-md hover:bg-indigo-50 transition">
+              <button className="px-6 py-3 bg-white text-hero font-semibold rounded-md shadow-md hover:bg-gold transition">
                 Take the skills test
               </button>
             </Link>
