@@ -13,12 +13,12 @@ const HeroSection = () => {
             Learn from the best <br /> coaches in the industry
           </h1>
           <p className="mt-4 text-lg md:text-xl">
-            Learn from a team of qualified coaches to help you achieve your goals
+            Chosing the right industry and business model BEFORE you embark on the adventure of developing ypur income skills will save you months and YEARS!
           </p>
           <div className="mt-6 flex gap-4">
             <Link href="/Quiz" passHref>
               <button className="px-6 py-3 bg-white text-indigo-600 font-semibold rounded-md shadow-md hover:bg-indigo-50 transition">
-                Join us
+                Take the skills test
               </button>
             </Link>
           </div>
