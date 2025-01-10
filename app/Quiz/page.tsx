@@ -29,7 +29,7 @@ const questions = [
       { id: "2", text: "Tony Robbins" },
       { id: "3", text: "Mr Beast" },
       { id: "4", text: "Elon Musk" },
-      { id: "5", text: "Tony Robbins" },
+      { id: "5", text: "Warren Buffett " },
     ],
   },
   {
@@ -44,7 +44,7 @@ const questions = [
     ],
   },
   {
-    questionText: "Which industry would you be most excited to gain skill in?",
+    questionText: " Now, which industry would you be most excited to gain skill in?",
     answers: [
       { id: "11", text: "Ecommerce" },
       { id: "12", text: "Sales" },
@@ -115,13 +115,13 @@ const Quiz = () => {
         </p>
         <input
           type="text"
-          className="bg-gray-700 text-white p-2 rounded-md mb-4"
+          className="bg-gray-700 text-gold p-2 rounded-md mb-4"
           placeholder="Enter your name"
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
         />
         <button
-          className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-md"
+          className="bg-gold hover:bg-yellow-500 text-darkblue py-2 px-4 rounded-md"
           onClick={handleNameSubmit}
         >
           Start Quiz
@@ -133,13 +133,13 @@ const Quiz = () => {
   if (stage === "intro") {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-4">
-        <h1 className="text-3xl font-semibold mb-4">Welcome to Our Quiz, {userName}!</h1>
+        <h1 className="text-3xl font-semibold mb-4">Welcome to Our Quiz,<span className="text-gold"> {userName} </span>⭐</h1>
         <p className="text-lg text-gray-300 mb-6 text-center">
           This quiz is designed to understand your preferences, interests, and inspirations. Based
           on your answers, we&apos;ll guide you toward exciting career opportunities!
         </p>
         <button
-          className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-md"
+          className="bg-gold hover:bg-yellow-500 text-darkblue py-2 px-4 rounded-md"
           onClick={() => setStage("loading")}
         >
           Start Quiz
@@ -151,8 +151,8 @@ const Quiz = () => {
   if (stage === "loading") {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
-        <p className="text-xl font-medium mb-4">Hey {userName}, getting your quiz ready...</p>
-        <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-xl font-medium mb-4">Hey <span className="text-gold"> {userName} </span>, getting your quiz ready...</p>
+        <div className="w-12 h-12 border-4 border-gold border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -160,7 +160,7 @@ const Quiz = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="w-96 bg-gray-800 text-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl font-semibold mb-2">
+        <h2 className="text-xl font-semibold mb-2 text-gold">
           Question {currentQuestionIndex + 1}/{questions.length}
         </h2>
         <p className="mb-4 text-gray-300">{questions[currentQuestionIndex].questionText}</p>
@@ -179,7 +179,7 @@ const Quiz = () => {
         </DndContext>
 
         <button
-          className="mt-4 w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-md"
+          className="mt-4 w-full bg-gold hover:bg-yellow-500 text-darkblue py-2 rounded-md"
           onClick={goToNextQuestion}
         >
           {currentQuestionIndex === questions.length - 1 ? "Finish" : "Next"}

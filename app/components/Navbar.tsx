@@ -28,12 +28,12 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Desktop Links */}
-          <ul className="hidden md:flex space-x-6">
-            <li className="hover:text-gold cursor-pointer">Testimonials</li>
-            <li className="hover:text-gold cursor-pointer">Courses</li>
-            <li className="hover:text-gold cursor-pointer">Books</li>
-            <li className="hover:text-gold cursor-pointer">About</li>
-            <li className="hover:text-gold cursor-pointer">Connect</li>
+          <ul className="hidden md:flex space-x-6 text-gold">
+            <li className="hover:text-white cursor-pointer">Testimonials</li>
+            <li className="hover:text-white cursor-pointer">Courses</li>
+            <li className="hover:text-white cursor-pointer">Books</li>
+            <li className="hover:text-white cursor-pointer">About</li>
+            <li className="hover:text-white cursor-pointer">Connect</li>
           </ul>
 
           {/* Hamburger Button */}

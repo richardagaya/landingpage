@@ -17,7 +17,7 @@ const HeroSection = () => {
           </p>
           <div className="mt-6 flex gap-4">
             <Link href="/Quiz" passHref>
-              <button className="px-6 py-3 bg-white text-hero font-semibold rounded-md shadow-md hover:bg-gold transition">
+              <button className="px-6 py-3 bg-gold text-hero font-semibold rounded-md shadow-md hover:bg-yellow-500 transition">
                 Take the skills test
               </button>
             </Link>

@@ -18,6 +18,7 @@ export default {
         lightblue: "#719AC4",
         midle:"06338D",
         new:"06238D",
+        hover1:"DDB720",
       },
     },
   },
