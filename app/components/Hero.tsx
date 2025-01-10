@@ -10,7 +10,7 @@ const HeroSection = () => {
         {/* Text Content */}
         <div className="flex flex-col items-center md:items-start md:w-1/2 text-center md:text-left">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-            Learn from the best <br /> coaches in the industry
+            Get your path today <br /> to a successful business!
           </h1>
           <p className="mt-4 text-lg md:text-xl">
             Chosing the right industry and business model BEFORE you embark on the adventure of developing ypur income skills will save you months and YEARS!
