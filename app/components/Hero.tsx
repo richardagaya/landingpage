@@ -13,7 +13,7 @@ const HeroSection = () => {
             Get your path today <br /> to a successful business!
           </h1>
           <p className="mt-4 text-lg md:text-xl">
-            Chosing the right industry and business model BEFORE you embark on the adventure of developing your income skills will save you months and YEARS!
+            Chosing the right industry and business model BEFORE you embark on the adventure of developing your income skills  will save you months and YEARS! 
           </p>
           <div className="mt-6 flex gap-4">
             <Link href="/Quiz" passHref>
