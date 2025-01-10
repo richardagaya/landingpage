@@ -8,12 +8,14 @@ const Navbar: React.FC = () => {
   return (
     <div className="relative">
       {/* Top Banner */}
-      <div className="bg-gold text-darkblue text-sm py-2 px-4 text-center">
-         <strong>SIX FIGURE CEO ROADMAP:</strong> Get a free personalised $0 to $150k a month business roadmap →
-      </div>
+      <a href="/Quiz" className="block">
+        <div className="bg-gold text-darkblue text-xl py-6 px-6 text-center">
+          <strong>SIX FIGURE CEO ROADMAP:</strong> Get a free personalised $0 to $150k a month business roadmap →
+        </div>
+      </a>
 
       {/* Navbar */}
-      <nav className="bg-darkblue text-white py-4 px-6">
+      <nav className="bg-darkblue text-white py-4 px-4">
         <div className="max-w-screen-xl mx-auto flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center space-x-3">
