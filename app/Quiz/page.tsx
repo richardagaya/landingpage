@@ -32,27 +32,7 @@ const questions = [
       { id: "5", text: "Tony Robbins" },
     ],
   },
-  {
-    questionText:
-      "It takes 1000 hours to gain financial freedom in any skill. Which of these industries do you have the most experience in?",
-    answers: [
-      { id: "6", text: "Ecommerce" },
-      { id: "7", text: "Sales" },
-      { id: "8", text: "Content creation" },
-      { id: "9", text: "Software development" },
-      { id: "10", text: "Trading" },
-    ],
-  },
-  {
-    questionText: "Which industry would you be most excited to gain skill in?",
-    answers: [
-      { id: "11", text: "Ecommerce" },
-      { id: "12", text: "Sales" },
-      { id: "13", text: "Content Creation" },
-      { id: "14", text: "Software development" },
-      { id: "15", text: "Trading" },
-    ],
-  },
+  // Additional questions...
 ];
 
 const Quiz = () => {
@@ -60,7 +40,6 @@ const Quiz = () => {
   const [userName, setUserName] = useState<string>("");
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Answer[]>(questions[currentQuestion].answers);
-  const [responses, setResponses] = useState<{ [key: number]: Answer[] }>({});
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -74,7 +53,7 @@ const Quiz = () => {
     if (stage === "loading") {
       const timer = setTimeout(() => {
         setStage("quiz");
-      }, 3000); // Simulate loading for 3 seconds
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [stage]);
@@ -90,13 +69,12 @@ const Quiz = () => {
   };
 
   const goToNextQuestion = () => {
-    setResponses((prev) => ({ ...prev, [currentQuestion]: answers }));
     const nextQuestion = currentQuestion + 1;
     if (nextQuestion < questions.length) {
       setCurrentQuestion(nextQuestion);
       setAnswers(questions[nextQuestion].answers);
     } else {
-      alert("Quiz Completed!"); // Replace with redirection logic.
+      alert("Quiz Completed!");
     }
   };
 
@@ -138,7 +116,7 @@ const Quiz = () => {
         <h1 className="text-3xl font-semibold mb-4">Welcome to Our Quiz, {userName}!</h1>
         <p className="text-lg text-gray-300 mb-6 text-center">
           This quiz is designed to understand your preferences, interests, and inspirations. Based
-          on your answers, we'll guide you towards exciting career opportunities!
+          on your answers, we&apos;ll guide you toward exciting career opportunities!
         </p>
         <button
           className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-md"
