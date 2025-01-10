@@ -1,3 +1,4 @@
+import { light } from "@fortawesome/fontawesome-svg-core/import.macro";
 import type { Config } from "tailwindcss";
 
 export default {
@@ -14,6 +15,7 @@ export default {
         gold: "#FFD700", // Matches your logo's gold
         hero: "#011631",
         darkblue: "#020D23",
+        lightblue: "#ADD8E6",
       },
     },
   },

@@ -1,10 +1,11 @@
 // components/HeroSection.tsx
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-gradient-to-r from-hero via-indigo-600 to-purple-700 text-white">
+    <section className="relative bg-gradient-to-r from-hero via-indigo-600 to-lightblue text-white">
       <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-6 py-16 space-y-8 md:space-y-0">
         {/* Text Content */}
         <div className="flex flex-col items-center md:items-start md:w-1/2 text-center md:text-left">
@@ -15,9 +16,11 @@ const HeroSection = () => {
             Learn from a team of qualified coaches to help you achieve your goals
           </p>
           <div className="mt-6 flex gap-4">
-            <button className="px-6 py-3 bg-white text-indigo-600 font-semibold rounded-md shadow-md hover:bg-indigo-50 transition">
-              Join us
-            </button>
+            <Link href="/Quiz" passHref>
+              <button className="px-6 py-3 bg-white text-indigo-600 font-semibold rounded-md shadow-md hover:bg-indigo-50 transition">
+                Join us
+              </button>
+            </Link>
           </div>
         </div>
 

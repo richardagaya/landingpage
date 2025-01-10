@@ -14,7 +14,7 @@ import {
   useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type Answer = {
   id: string;
@@ -23,50 +23,44 @@ type Answer = {
 
 const questions = [
   {
-    questionText: "At work, I am convinced because of what I...",
+    questionText: "Who's Success Story Inspires You The Most?",
     answers: [
-      { id: "1", text: "See happening" },
-      { id: "2", text: "Hear from others" },
-      { id: "3", text: "Read in reports" },
-      { id: "4", text: "Experience now" },
-      { id: "5", text: "Do myself" },
+      { id: "1", text: "Jeff Bezos" },
+      { id: "2", text: "Tony Robbins" },
+      { id: "3", text: "Mr Beast" },
+      { id: "4", text: "Elon Musk" },
+      { id: "5", text: "Tony Robbins" },
     ],
   },
   {
-    questionText: "I prioritize my tasks based on...",
+    questionText:
+      "It takes 1000 hours to gain financial freedom in any skill. Which of these industries do you have the most experience in?",
     answers: [
-      { id: "6", text: "Urgency" },
-      { id: "7", text: "Importance" },
-      { id: "8", text: "Duration" },
-      { id: "9", text: "Resources required" },
-      { id: "10", text: "Outcome" },
+      { id: "6", text: "Ecommerce" },
+      { id: "7", text: "Sales" },
+      { id: "8", text: "Content creation" },
+      { id: "9", text: "Software development" },
+      { id: "10", text: "Trading" },
     ],
   },
   {
-    questionText: "I prefer feedback that is...",
+    questionText: "Which industry would you be most excited to gain skill in?",
     answers: [
-      { id: "11", text: "Detailed and frequent" },
-      { id: "12", text: "Casual and infrequent" },
-      { id: "13", text: "Positive" },
-      { id: "14", text: "Constructive" },
-      { id: "15", text: "Direct and straightforward" },
-    ],
-  },
-  {
-    questionText: "My ideal work environment involves...",
-    answers: [
-      { id: "16", text: "Collaboration" },
-      { id: "17", text: "Independence" },
-      { id: "18", text: "Flexibility" },
-      { id: "19", text: "Structure" },
-      { id: "20", text: "Innovation" },
+      { id: "11", text: "Ecommerce" },
+      { id: "12", text: "Sales" },
+      { id: "13", text: "Content Creation" },
+      { id: "14", text: "Software development" },
+      { id: "15", text: "Trading" },
     ],
   },
 ];
 
 const Quiz = () => {
+  const [stage, setStage] = useState<"nameInput" | "intro" | "loading" | "quiz">("nameInput");
+  const [userName, setUserName] = useState<string>("");
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [items, setItems] = useState<Answer[]>(questions[currentQuestion].answers);
+  const [answers, setAnswers] = useState<Answer[]>(questions[currentQuestion].answers);
+  const [responses, setResponses] = useState<{ [key: number]: Answer[] }>({});
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -76,9 +70,18 @@ const Quiz = () => {
     })
   );
 
+  useEffect(() => {
+    if (stage === "loading") {
+      const timer = setTimeout(() => {
+        setStage("quiz");
+      }, 3000); // Simulate loading for 3 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [stage]);
+
   const handleDragEnd = ({ active, over }: DragEndEvent) => {
     if (active.id !== over?.id) {
-      setItems((prev) => {
+      setAnswers((prev) => {
         const oldIndex = prev.findIndex((item) => item.id === active.id);
         const newIndex = prev.findIndex((item) => item.id === over?.id);
         return arrayMove(prev, oldIndex, newIndex);
@@ -87,26 +90,88 @@ const Quiz = () => {
   };
 
   const goToNextQuestion = () => {
+    setResponses((prev) => ({ ...prev, [currentQuestion]: answers }));
     const nextQuestion = currentQuestion + 1;
     if (nextQuestion < questions.length) {
       setCurrentQuestion(nextQuestion);
-      setItems(questions[nextQuestion].answers);
+      setAnswers(questions[nextQuestion].answers);
+    } else {
+      alert("Quiz Completed!"); // Replace with redirection logic.
     }
   };
+
+  const handleNameSubmit = () => {
+    if (userName.trim()) {
+      setStage("intro");
+    } else {
+      alert("Please enter your name.");
+    }
+  };
+
+  if (stage === "nameInput") {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
+        <h1 className="text-3xl font-semibold mb-4">Welcome to the Quiz!</h1>
+        <p className="text-lg text-gray-300 mb-6 text-center">
+          Please enter your name to get started.
+        </p>
+        <input
+          type="text"
+          className="bg-gray-700 text-white p-2 rounded-md mb-4"
+          placeholder="Enter your name"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+        />
+        <button
+          className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-md"
+          onClick={handleNameSubmit}
+        >
+          Start Quiz
+        </button>
+      </div>
+    );
+  }
+
+  if (stage === "intro") {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-4">
+        <h1 className="text-3xl font-semibold mb-4">Welcome to Our Quiz, {userName}!</h1>
+        <p className="text-lg text-gray-300 mb-6 text-center">
+          This quiz is designed to understand your preferences, interests, and inspirations. Based
+          on your answers, we'll guide you towards exciting career opportunities!
+        </p>
+        <button
+          className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-md"
+          onClick={() => setStage("loading")}
+        >
+          Start Quiz
+        </button>
+      </div>
+    );
+  }
+
+  if (stage === "loading") {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
+        <p className="text-xl font-medium mb-4">Hey {userName}, getting your quiz ready...</p>
+        <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="w-96 bg-gray-800 text-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl font-semibold mb-2">Question {currentQuestion + 1}/4</h2>
+        <h2 className="text-xl font-semibold mb-2">Question {currentQuestion + 1}/3</h2>
         <p className="mb-4 text-gray-300">{questions[currentQuestion].questionText}</p>
         <p className="mb-4 text-sm text-gray-400">
-          Place the questions in order of most like you to least like you.
+          Place the options in order of most like you to least like you.
         </p>
 
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-          <SortableContext items={items.map((item) => item.id)} strategy={verticalListSortingStrategy}>
+          <SortableContext items={answers.map((item) => item.id)} strategy={verticalListSortingStrategy}>
             <div className="space-y-2">
-              {items.map((item) => (
+              {answers.map((item) => (
                 <SortableItem key={item.id} id={item.id} text={item.text} />
               ))}
             </div>
@@ -117,7 +182,7 @@ const Quiz = () => {
           className="mt-4 w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-md"
           onClick={goToNextQuestion}
         >
-          Next
+          {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
         </button>
       </div>
     </div>
