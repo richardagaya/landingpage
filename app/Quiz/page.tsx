@@ -1,5 +1,5 @@
-"use client"
-import React, { useState, useEffect } from "react";
+"use client";
+import React, { useState } from "react";
 import {
   DndContext,
   closestCenter,
@@ -53,7 +53,7 @@ const questions: Question[] = [
   },
   {
     questionText:
-      "It takes 1000 hours to gain financial freedom in any skill. Which of these industries do you have the most experience in?",
+      "Which industry would you be most excited to gain skill in?",
     type: "ranking",
     answers: [
       { id: "6", text: "Ecommerce" },
@@ -69,7 +69,7 @@ const AppQuiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [responses, setResponses] = useState<any[]>([]);
 
-  const currentQuestion = questions[currentQuestionIndex];
+  const currentQuestion = questions[currentQuestionIndex] || null;
 
   const goToNextQuestion = (response: any) => {
     setResponses((prev) => [...prev, response]);
@@ -78,10 +78,14 @@ const AppQuiz = () => {
     if (nextIndex < questions.length) {
       setCurrentQuestionIndex(nextIndex);
     } else {
-      console.log("Quiz completed. Responses:", responses);
+      console.log("Quiz completed. Responses:", [...responses, response]);
       alert("Quiz Completed!");
     }
   };
+
+  if (!currentQuestion) {
+    return <div className="text-red-500">Error: Question not found!</div>;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
@@ -93,12 +97,16 @@ const AppQuiz = () => {
         {currentQuestion.type === "ranking" ? (
           <RankingQuestion
             question={currentQuestion}
-            onSubmit={(response) => goToNextQuestion({ question: currentQuestion, response })}
+            onSubmit={(response) =>
+              goToNextQuestion({ question: currentQuestion, response })
+            }
           />
         ) : (
           <ScoringQuestion
             question={currentQuestion}
-            onSubmit={(response) => goToNextQuestion({ question: currentQuestion, response })}
+            onSubmit={(response) =>
+              goToNextQuestion({ question: currentQuestion, response })
+            }
           />
         )}
       </div>
@@ -159,7 +167,7 @@ const ScoringQuestion = ({
   onSubmit,
 }: {
   question: Question;
-  onSubmit: (response: Answer[]) => void;
+  onSubmit: (response: { id: string; text: string; score: number }[]) => void;
 }) => {
   const [scores, setScores] = useState<Record<string, number>>({});
 
@@ -189,7 +197,15 @@ const ScoringQuestion = ({
       </div>
       <button
         className="mt-4 w-full bg-gold hover:bg-yellow-500 text-darkblue py-2 rounded-md"
-        onClick={() => onSubmit(Object.entries(scores).map(([id, score]) => ({ id, text: question.answers.find(answer => answer.id === id)?.text || '', score })))}
+        onClick={() =>
+          onSubmit(
+            Object.entries(scores).map(([id, score]) => ({
+              id,
+              text: question.answers.find((answer) => answer.id === id)?.text || "",
+              score,
+            }))
+          )
+        }
       >
         Next
       </button>
