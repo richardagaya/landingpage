@@ -27,9 +27,13 @@ type Question = {
   answers: Answer[];
 };
 
+type RankingResponse = Answer[];
+type ScoringResponse = { id: string; text: string; score: number }[];
+type QuizResponse = RankingResponse | ScoringResponse;
+
 const questions: Question[] = [
   {
-    questionText: "Who's Success Story Inspires You The Most?",
+    questionText: "Who&apos;s Success Story Inspires You The Most?",
     type: "scoring",
     answers: [
       { id: "1", text: "Jeff Bezos" },
@@ -51,34 +55,22 @@ const questions: Question[] = [
       { id: "10", text: "Trading" },
     ],
   },
-  {
-    questionText:
-      "Which industry would you be most excited to gain skill in?",
-    type: "ranking",
-    answers: [
-      { id: "6", text: "Ecommerce" },
-      { id: "7", text: "Sales" },
-      { id: "8", text: "Content creation" },
-      { id: "9", text: "Software development" },
-      { id: "10", text: "Trading" },
-    ],
-  },
 ];
 
 const AppQuiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [responses, setResponses] = useState<any[]>([]);
+  const [responses, setResponses] = useState<{ question: Question; response: QuizResponse }[]>([]);
 
   const currentQuestion = questions[currentQuestionIndex] || null;
 
-  const goToNextQuestion = (response: any) => {
-    setResponses((prev) => [...prev, response]);
+  const goToNextQuestion = (response: QuizResponse) => {
+    setResponses((prev) => [...prev, { question: currentQuestion, response }]);
     const nextIndex = currentQuestionIndex + 1;
 
     if (nextIndex < questions.length) {
       setCurrentQuestionIndex(nextIndex);
     } else {
-      console.log("Quiz completed. Responses:", [...responses, response]);
+      console.log("Quiz completed. Responses:", [...responses, { question: currentQuestion, response }]);
       alert("Quiz Completed!");
     }
   };
@@ -97,16 +89,12 @@ const AppQuiz = () => {
         {currentQuestion.type === "ranking" ? (
           <RankingQuestion
             question={currentQuestion}
-            onSubmit={(response) =>
-              goToNextQuestion({ question: currentQuestion, response })
-            }
+            onSubmit={(response) => goToNextQuestion(response)}
           />
         ) : (
           <ScoringQuestion
             question={currentQuestion}
-            onSubmit={(response) =>
-              goToNextQuestion({ question: currentQuestion, response })
-            }
+            onSubmit={(response) => goToNextQuestion(response)}
           />
         )}
       </div>
@@ -119,46 +107,42 @@ const RankingQuestion = ({
   onSubmit,
 }: {
   question: Question;
-  onSubmit: (response: Answer[]) => void;
+  onSubmit: (response: RankingResponse) => void;
 }) => {
-  const [answers, setAnswers] = useState<Answer[]>(question.answers);
+  const [answers, setAnswers] = useState(question.answers);
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 5,
-      },
-    })
-  );
+  const sensors = useSensors(useSensor(PointerSensor));
 
-  const handleDragEnd = ({ active, over }: DragEndEvent) => {
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
     if (active.id !== over?.id) {
-      setAnswers((prev) => {
-        const oldIndex = prev.findIndex((item) => item.id === active.id);
-        const newIndex = prev.findIndex((item) => item.id === over?.id);
-        return arrayMove(prev, oldIndex, newIndex);
+      setAnswers((items) => {
+        const oldIndex = items.findIndex((item) => item.id === active.id);
+        const newIndex = items.findIndex((item) => item.id === over?.id);
+        return arrayMove(items, oldIndex, newIndex);
       });
     }
   };
 
   return (
-    <>
-      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <SortableContext items={answers.map((item) => item.id)} strategy={verticalListSortingStrategy}>
-          <div className="space-y-2">
-            {answers.map((item) => (
-              <SortableItem key={item.id} id={item.id} text={item.text} />
-            ))}
-          </div>
-        </SortableContext>
-      </DndContext>
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <SortableContext items={answers} strategy={verticalListSortingStrategy}>
+        <ul className="space-y-2">
+          {answers.map((answer) => (
+            <SortableItem key={answer.id} id={answer.id}>
+              {answer.text}
+            </SortableItem>
+          ))}
+        </ul>
+      </SortableContext>
       <button
-        className="mt-4 w-full bg-gold hover:bg-yellow-500 text-darkblue py-2 rounded-md"
         onClick={() => onSubmit(answers)}
+        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
       >
-        Next
+        Submit
       </button>
-    </>
+    </DndContext>
   );
 };
 
@@ -167,53 +151,42 @@ const ScoringQuestion = ({
   onSubmit,
 }: {
   question: Question;
-  onSubmit: (response: { id: string; text: string; score: number }[]) => void;
+  onSubmit: (response: ScoringResponse) => void;
 }) => {
-  const [scores, setScores] = useState<Record<string, number>>({});
+  const [scores, setScores] = useState<{ id: string; text: string; score: number }[]>(
+    question.answers.map((answer) => ({ ...answer, score: 0 }))
+  );
 
   const handleScoreChange = (id: string, score: number) => {
-    setScores((prev) => ({ ...prev, [id]: score }));
+    setScores((prevScores) =>
+      prevScores.map((item) => (item.id === id ? { ...item, score } : item))
+    );
   };
 
   return (
-    <>
-      <div className="space-y-4">
-        {question.answers.map((answer) => (
-          <div key={answer.id} className="flex items-center space-x-4">
-            <span>{answer.text}</span>
-            <select
-              className="border rounded-md p-2 bg-gray-700 text-white"
-              onChange={(e) => handleScoreChange(answer.id, Number(e.target.value))}
-            >
-              <option value="0">Assign Score</option>
-              <option value="1">1 (Inspires me the most)</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5 (Haven't heard of them)</option>
-            </select>
-          </div>
-        ))}
-      </div>
+    <div>
+      {scores.map((item) => (
+        <div key={item.id} className="mb-4">
+          <label className="block text-gray-300 mb-2">{item.text}</label>
+          <input
+            type="number"
+            value={item.score}
+            onChange={(e) => handleScoreChange(item.id, parseInt(e.target.value, 10) || 0)}
+            className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white"
+          />
+        </div>
+      ))}
       <button
-        className="mt-4 w-full bg-gold hover:bg-yellow-500 text-darkblue py-2 rounded-md"
-        onClick={() =>
-          onSubmit(
-            Object.entries(scores).map(([id, score]) => ({
-              id,
-              text: question.answers.find((answer) => answer.id === id)?.text || "",
-              score,
-            }))
-          )
-        }
+        onClick={() => onSubmit(scores)}
+        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
       >
-        Next
+        Submit
       </button>
-    </>
+    </div>
   );
 };
 
-const SortableItem = ({ id, text }: { id: string; text: string }) => {
+const SortableItem = ({ id, children }: { id: string; children: React.ReactNode }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
   const style = {
@@ -222,16 +195,15 @@ const SortableItem = ({ id, text }: { id: string; text: string }) => {
   };
 
   return (
-    <div
+    <li
       ref={setNodeRef}
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-gray-700 p-3 rounded-md flex justify-between items-center"
+      className="px-4 py-2 bg-gray-700 text-white rounded shadow cursor-pointer"
     >
-      <span>{text}</span>
-      <span className="text-gray-400 cursor-move">⋮⋮</span>
-    </div>
+      {children}
+    </li>
   );
 };
 
