@@ -33,7 +33,7 @@ type QuizResponse = RankingResponse | ScoringResponse;
 
 const questions: Question[] = [
   {
-    questionText: "Who&apos;s Success Story Inspires You The Most?",
+    questionText: "Who Success Story Inspires You The Most?",
     type: "scoring",
     answers: [
       { id: "1", text: "Jeff Bezos" },
@@ -46,6 +46,18 @@ const questions: Question[] = [
   {
     questionText:
       "It takes 1000 hours to gain financial freedom in any skill. Which of these industries do you have the most experience in?",
+    type: "ranking",
+    answers: [
+      { id: "6", text: "Ecommerce" },
+      { id: "7", text: "Sales" },
+      { id: "8", text: "Content creation" },
+      { id: "9", text: "Software development" },
+      { id: "10", text: "Trading" },
+    ],
+  },
+  {
+    questionText:
+      "Which industry would you be most excited to gain skill in?",
     type: "ranking",
     answers: [
       { id: "6", text: "Ecommerce" },
