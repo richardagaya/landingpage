@@ -1,4 +1,5 @@
-"use client";
+"use client"
+import React, { useState, useEffect } from "react";
 import {
   DndContext,
   closestCenter,
@@ -14,27 +15,34 @@ import {
   useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useState, useEffect } from "react";
 
 type Answer = {
   id: string;
   text: string;
 };
 
-const questions = [
+type Question = {
+  questionText: string;
+  type: "ranking" | "scoring";
+  answers: Answer[];
+};
+
+const questions: Question[] = [
   {
     questionText: "Who's Success Story Inspires You The Most?",
+    type: "scoring",
     answers: [
       { id: "1", text: "Jeff Bezos" },
       { id: "2", text: "Tony Robbins" },
       { id: "3", text: "Mr Beast" },
       { id: "4", text: "Elon Musk" },
-      { id: "5", text: "Warren Buffett " },
+      { id: "5", text: "Warren Buffett" },
     ],
   },
   {
     questionText:
-      "It takes 1000 hours to gain financial freedom in any skill, Which of these industries do you have the most experience in?",
+      "It takes 1000 hours to gain financial freedom in any skill. Which of these industries do you have the most experience in?",
+    type: "ranking",
     answers: [
       { id: "6", text: "Ecommerce" },
       { id: "7", text: "Sales" },
@@ -44,22 +52,68 @@ const questions = [
     ],
   },
   {
-    questionText: " Now, which industry would you be most excited to gain skill in?",
+    questionText:
+      "It takes 1000 hours to gain financial freedom in any skill. Which of these industries do you have the most experience in?",
+    type: "ranking",
     answers: [
-      { id: "11", text: "Ecommerce" },
-      { id: "12", text: "Sales" },
-      { id: "13", text: "Content Creation" },
-      { id: "14", text: "Software development" },
-      { id: "15", text: "Trading" },
+      { id: "6", text: "Ecommerce" },
+      { id: "7", text: "Sales" },
+      { id: "8", text: "Content creation" },
+      { id: "9", text: "Software development" },
+      { id: "10", text: "Trading" },
     ],
   },
 ];
 
-const Quiz = () => {
-  const [stage, setStage] = useState<"nameInput" | "intro" | "loading" | "quiz">("nameInput");
-  const [userName, setUserName] = useState<string>("");
+const AppQuiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState<Answer[]>(questions[currentQuestionIndex].answers);
+  const [responses, setResponses] = useState<any[]>([]);
+
+  const currentQuestion = questions[currentQuestionIndex];
+
+  const goToNextQuestion = (response: any) => {
+    setResponses((prev) => [...prev, response]);
+    const nextIndex = currentQuestionIndex + 1;
+
+    if (nextIndex < questions.length) {
+      setCurrentQuestionIndex(nextIndex);
+    } else {
+      console.log("Quiz completed. Responses:", responses);
+      alert("Quiz Completed!");
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-900">
+      <div className="w-96 bg-gray-800 text-white p-6 rounded-lg shadow-lg">
+        <h2 className="text-xl font-semibold mb-2 text-gold">
+          Question {currentQuestionIndex + 1}/{questions.length}
+        </h2>
+        <p className="mb-4 text-gray-300">{currentQuestion.questionText}</p>
+        {currentQuestion.type === "ranking" ? (
+          <RankingQuestion
+            question={currentQuestion}
+            onSubmit={(response) => goToNextQuestion({ question: currentQuestion, response })}
+          />
+        ) : (
+          <ScoringQuestion
+            question={currentQuestion}
+            onSubmit={(response) => goToNextQuestion({ question: currentQuestion, response })}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+const RankingQuestion = ({
+  question,
+  onSubmit,
+}: {
+  question: Question;
+  onSubmit: (response: Answer[]) => void;
+}) => {
+  const [answers, setAnswers] = useState<Answer[]>(question.answers);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -68,15 +122,6 @@ const Quiz = () => {
       },
     })
   );
-
-  useEffect(() => {
-    if (stage === "loading") {
-      const timer = setTimeout(() => {
-        setStage("quiz");
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [stage]);
 
   const handleDragEnd = ({ active, over }: DragEndEvent) => {
     if (active.id !== over?.id) {
@@ -88,104 +133,67 @@ const Quiz = () => {
     }
   };
 
-  const goToNextQuestion = () => {
-    const nextQuestionIndex = currentQuestionIndex + 1;
-    if (nextQuestionIndex < questions.length) {
-      setCurrentQuestionIndex(nextQuestionIndex);
-      setAnswers(questions[nextQuestionIndex].answers);
-    } else {
-      alert("Quiz Completed!");
-    }
+  return (
+    <>
+      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <SortableContext items={answers.map((item) => item.id)} strategy={verticalListSortingStrategy}>
+          <div className="space-y-2">
+            {answers.map((item) => (
+              <SortableItem key={item.id} id={item.id} text={item.text} />
+            ))}
+          </div>
+        </SortableContext>
+      </DndContext>
+      <button
+        className="mt-4 w-full bg-gold hover:bg-yellow-500 text-darkblue py-2 rounded-md"
+        onClick={() => onSubmit(answers)}
+      >
+        Next
+      </button>
+    </>
+  );
+};
+
+const ScoringQuestion = ({
+  question,
+  onSubmit,
+}: {
+  question: Question;
+  onSubmit: (response: Answer[]) => void;
+}) => {
+  const [scores, setScores] = useState<Record<string, number>>({});
+
+  const handleScoreChange = (id: string, score: number) => {
+    setScores((prev) => ({ ...prev, [id]: score }));
   };
-
-  const handleNameSubmit = () => {
-    if (userName.trim()) {
-      setStage("intro");
-    } else {
-      alert("Please enter your name.");
-    }
-  };
-
-  if (stage === "nameInput") {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
-        <h1 className="text-3xl font-semibold mb-4">Welcome to the Quiz!</h1>
-        <p className="text-lg text-gray-300 mb-6 text-center">
-          Please enter your name to get started.
-        </p>
-        <input
-          type="text"
-          className="bg-gray-700 text-gold p-2 rounded-md mb-4"
-          placeholder="Enter your name"
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
-        />
-        <button
-          className="bg-gold hover:bg-yellow-500 text-darkblue py-2 px-4 rounded-md"
-          onClick={handleNameSubmit}
-        >
-          Start Quiz
-        </button>
-      </div>
-    );
-  }
-
-  if (stage === "intro") {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-4">
-        <h1 className="text-3xl font-semibold mb-4">Welcome to Our Quiz,<span className="text-gold"> {userName} </span>⭐</h1>
-        <p className="text-lg text-gray-300 mb-6 text-center">
-          This quiz is designed to understand your preferences, interests, and inspirations. Based
-          on your answers, we&apos;ll guide you toward exciting career opportunities!
-        </p>
-        <button
-          className="bg-gold hover:bg-yellow-500 text-darkblue py-2 px-4 rounded-md"
-          onClick={() => setStage("loading")}
-        >
-          Start Quiz
-        </button>
-      </div>
-    );
-  }
-
-  if (stage === "loading") {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
-        <p className="text-xl font-medium mb-4">Hey <span className="text-gold"> {userName} </span>, getting your quiz ready...</p>
-        <div className="w-12 h-12 border-4 border-gold border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
-  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="w-96 bg-gray-800 text-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl font-semibold mb-2 text-gold">
-          Question {currentQuestionIndex + 1}/{questions.length}
-        </h2>
-        <p className="mb-4 text-gray-300">{questions[currentQuestionIndex].questionText}</p>
-        <p className="mb-4 text-sm text-gray-400">
-          Place the options in order of most like you to least like you.
-        </p>
-
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-          <SortableContext items={answers.map((item) => item.id)} strategy={verticalListSortingStrategy}>
-            <div className="space-y-2">
-              {answers.map((item) => (
-                <SortableItem key={item.id} id={item.id} text={item.text} />
-              ))}
-            </div>
-          </SortableContext>
-        </DndContext>
-
-        <button
-          className="mt-4 w-full bg-gold hover:bg-yellow-500 text-darkblue py-2 rounded-md"
-          onClick={goToNextQuestion}
-        >
-          {currentQuestionIndex === questions.length - 1 ? "Finish" : "Next"}
-        </button>
+    <>
+      <div className="space-y-4">
+        {question.answers.map((answer) => (
+          <div key={answer.id} className="flex items-center space-x-4">
+            <span>{answer.text}</span>
+            <select
+              className="border rounded-md p-2 bg-gray-700 text-white"
+              onChange={(e) => handleScoreChange(answer.id, Number(e.target.value))}
+            >
+              <option value="0">Assign Score</option>
+              <option value="1">1 (Inspires me the most)</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5 (Haven't heard of them)</option>
+            </select>
+          </div>
+        ))}
       </div>
-    </div>
+      <button
+        className="mt-4 w-full bg-gold hover:bg-yellow-500 text-darkblue py-2 rounded-md"
+        onClick={() => onSubmit(Object.entries(scores).map(([id, score]) => ({ id, text: question.answers.find(answer => answer.id === id)?.text || '', score })))}
+      >
+        Next
+      </button>
+    </>
   );
 };
 
@@ -211,4 +219,4 @@ const SortableItem = ({ id, text }: { id: string; text: string }) => {
   );
 };
 
-export default Quiz;
+export default AppQuiz;
