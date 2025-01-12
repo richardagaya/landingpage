@@ -17,6 +17,7 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { useRouter } from "next/router";
 
+// Types
 type Answer = {
   id: string;
   text: string;
@@ -32,6 +33,7 @@ type RankingResponse = Answer[];
 type ScoringResponse = { id: string; text: string; score: number }[];
 type QuizResponse = RankingResponse | ScoringResponse;
 
+// Questions Data
 const questions: Question[] = [
   {
     questionText: "Who Success Story Inspires You The Most?",
@@ -71,6 +73,9 @@ const questions: Question[] = [
 ];
 
 const AppQuiz = () => {
+  const [userName, setUserName] = useState("");
+  const [isGreetingComplete, setIsGreetingComplete] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [responses, setResponses] = useState<{ question: Question; response: QuizResponse }[]>([]);
   const router = useRouter();
@@ -118,6 +123,47 @@ const AppQuiz = () => {
       alert("Quiz Completed!");
     }
   };
+
+  const handleStartQuiz = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsGreetingComplete(true);
+    }, 2000);
+  };
+
+  if (!isGreetingComplete) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-900">
+        <div className="w-96 bg-gray-800 text-white p-6 rounded-lg shadow-lg">
+          <h1 className="text-2xl font-bold mb-4">Welcome!</h1>
+          {!userName ? (
+            <>
+              <label htmlFor="name" className="block mb-2 text-gray-300">
+                Please enter your name to get started:
+              </label>
+              <input
+                id="name"
+                type="text"
+                className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white mb-4"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </>
+          ) : (
+            <p className="mb-4">Hello {userName}, hold tight! Getting the quiz for you...</p>
+          )}
+          <button
+            onClick={handleStartQuiz}
+            disabled={!userName}
+            className="w-full px-4 py-2 bg-gold text-white rounded hover:bg-yellow-500"
+          >
+            {isLoading ? "Loading..." : "Start Quiz"}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!currentQuestion) {
     return <div className="text-red-500">Error: Question not found!</div>;
