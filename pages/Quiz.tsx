@@ -15,6 +15,7 @@ import {
   useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { useRouter } from "next/router";
 
 type Answer = {
   id: string;
@@ -57,7 +58,7 @@ const questions: Question[] = [
   },
   {
     questionText:
-      "Which industry would you be most excited to gain skill in?",
+      "Which industry would you be most excited to gain skill in? Drag and order your answers according to your preference (1 = top preferred, 5 = least preferred):",
     type: "ranking",
     answers: [
       { id: "6", text: "Ecommerce" },
@@ -72,8 +73,34 @@ const questions: Question[] = [
 const AppQuiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [responses, setResponses] = useState<{ question: Question; response: QuizResponse }[]>([]);
+  const router = useRouter();
 
   const currentQuestion = questions[currentQuestionIndex] || null;
+
+  const handlePairNavigation = (topTwoAnswers: string[]) => {
+    const pairMap: Record<string, string> = {
+      "Content creationEcommerce": "/pairs/ContentCreationEcommerce",
+      "Content creationHackathon": "/pairs/ContentCreationHackathon",
+      "Content creationTrading": "/pairs/ContentCreationTrading",
+      "EcommerceHackathon": "/pairs/HackathonEcommerce",
+      "EcommerceTrading": "/pairs/EcommerceTrading",
+      "HackathonTrading": "/pairs/HackathonTrading",
+      "SalesContent creation": "/pairs/SalesContentCreation",
+      "SalesEcommerce": "/pairs/SalesEcommerce",
+      "SalesHackathon": "/pairs/SalesHackathon",
+      "SalesTrading": "/pairs/SalesTrading",
+    };
+
+    const pairKey = topTwoAnswers.sort().join("");
+    const targetPath = pairMap[pairKey];
+
+    if (targetPath) {
+      router.push(targetPath);
+    } else {
+      console.error("No matching page found for the selected pair.");
+      alert("No matching path found!");
+    }
+  };
 
   const goToNextQuestion = (response: QuizResponse) => {
     setResponses((prev) => [...prev, { question: currentQuestion, response }]);
@@ -81,8 +108,13 @@ const AppQuiz = () => {
 
     if (nextIndex < questions.length) {
       setCurrentQuestionIndex(nextIndex);
+    } else if (currentQuestionIndex === 2) {
+      const topTwoAnswers = (response as RankingResponse)
+        .slice(0, 2)
+        .map((answer) => answer.text);
+      handlePairNavigation(topTwoAnswers);
     } else {
-      console.log("Quiz completed. Responses:", [...responses, { question: currentQuestion, response }]);
+      console.log("Quiz completed. Responses:", responses);
       alert("Quiz Completed!");
     }
   };
@@ -150,9 +182,9 @@ const RankingQuestion = ({
       </SortableContext>
       <button
         onClick={() => onSubmit(answers)}
-        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        className="mt-4 px-4 py-2 bg-gold text-white rounded hover:bg-yellow-500"
       >
-        Submit
+        Next
       </button>
     </DndContext>
   );
@@ -190,9 +222,9 @@ const ScoringQuestion = ({
       ))}
       <button
         onClick={() => onSubmit(scores)}
-        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        className="mt-4 px-4 py-2 bg-gold text-white rounded hover:bg-yellow-500"
       >
-        Submit
+        Next
       </button>
     </div>
   );

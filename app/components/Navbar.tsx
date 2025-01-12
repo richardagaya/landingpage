@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
       {/* Top Banner */}
       <a href="/Quiz" className="block">
         <div className="bg-gold text-darkblue text-xl py-6 px-6 text-center">
-          <strong>SIX FIGURE CEO ROADMAP:</strong> Get a free personalised $0 to $150k a month business roadmap →
+          <strong>SIX FIGURE CEO ROADMAP:</strong>Get a free personalized business roadmap for your financial freedom journey →
         </div>
       </a>
 
