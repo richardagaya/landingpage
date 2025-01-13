@@ -4,7 +4,6 @@ import RankingQuestion from "../app/components/RankingQuestion";
 import ScoringQuestion from "../app/components/ScoringQuestion";
 import { questions, isFullName } from "../helpers";
 
-
 const AppQuiz = () => {
   const [userName, setUserName] = useState("");
   const [isNameEntered, setIsNameEntered] = useState(false);
@@ -97,9 +96,9 @@ const AppQuiz = () => {
         </h2>
         <p className="mb-4 text-gray-300">{currentQuestion.questionText}</p>
         {currentQuestion.type === "ranking" ? (
-          <RankingQuestion question={currentQuestion} onSubmit={() => goToNextQuestion()} />
+          <RankingQuestion question={currentQuestion} onSubmit={goToNextQuestion} />
         ) : (
-          <ScoringQuestion question={currentQuestion} onSubmit={() => goToNextQuestion()} />
+          <ScoringQuestion question={currentQuestion} onSubmit={goToNextQuestion} />
         )}
       </div>
     </div>
