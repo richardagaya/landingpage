@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { useRouter } from "next/router";
 import RankingQuestion from "../app/components/RankingQuestion";
 import ScoringQuestion from "../app/components/ScoringQuestion";
 import { questions, isFullName } from "../helpers";
@@ -10,8 +9,6 @@ const AppQuiz = () => {
   const [isNameEntered, setIsNameEntered] = useState(false);
   const [isQuizStarted, setIsQuizStarted] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [responses, setResponses] = useState([]);
-  const router = useRouter();
 
   const currentQuestion = questions[currentQuestionIndex] || null;
 
@@ -27,8 +24,7 @@ const AppQuiz = () => {
     setIsQuizStarted(true);
   };
 
-  const goToNextQuestion = (response: any) => {
-    setResponses((prev) => [...prev, { question: currentQuestion, response }]);
+  const goToNextQuestion = (response: { id: string; text: string }[] | { id: string; text: string; score: number }[]) => {
     const nextIndex = currentQuestionIndex + 1;
 
     if (nextIndex < questions.length) {
@@ -76,9 +72,7 @@ const AppQuiz = () => {
           <h1 className="text-2xl font-bold mb-4">
             Hey, {userName}! Welcome!
           </h1>
-          <p className="text-gray-300 mb-4">
-            Click below to start your quiz.
-          </p>
+          <p className="text-gray-300 mb-4">Click below to start your quiz.</p>
           <button
             onClick={startQuiz}
             className="w-full px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
