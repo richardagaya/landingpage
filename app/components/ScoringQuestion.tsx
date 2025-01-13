@@ -1,11 +1,30 @@
 import React, { useState } from "react";
 
-const ScoringQuestion = ({ question, onSubmit }) => {
-  const [scores, setScores] = useState(
+// Define types for props
+type Answer = {
+  id: string;
+  text: string;
+};
+
+type Question = {
+  questionText: string;
+  type: "ranking" | "scoring";
+  answers: Answer[];
+};
+
+type ScoringResponse = { id: string; text: string; score: number }[];
+
+type ScoringQuestionProps = {
+  question: Question;
+  onSubmit: (response: ScoringResponse) => void;
+};
+
+const ScoringQuestion: React.FC<ScoringQuestionProps> = ({ question, onSubmit }) => {
+  const [scores, setScores] = useState<ScoringResponse>(
     question.answers.map((answer) => ({ ...answer, score: 0 }))
   );
 
-  const handleScoreChange = (id, score) => {
+  const handleScoreChange = (id: string, score: number) => {
     setScores((prevScores) =>
       prevScores.map((item) => (item.id === id ? { ...item, score } : item))
     );
