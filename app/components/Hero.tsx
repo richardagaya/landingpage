@@ -27,7 +27,7 @@ const HeroSection = () => {
         {/* Coach Image */}
         <div className="md:w-1/2 relative">
           <Image
-            src="/file.jpg" // Replace with your coach's image
+            src="/Joseph3.jpg" // Replace with your coach's image
             alt="Coach"
             width={500}
             height={500}
