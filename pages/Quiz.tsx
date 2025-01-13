@@ -4,6 +4,7 @@ import RankingQuestion from "../app/components/RankingQuestion";
 import ScoringQuestion from "../app/components/ScoringQuestion";
 import { questions, isFullName } from "../helpers";
 
+
 const AppQuiz = () => {
   const [userName, setUserName] = useState("");
   const [isNameEntered, setIsNameEntered] = useState(false);
