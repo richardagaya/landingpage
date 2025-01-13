@@ -1,10 +1,34 @@
 import React, { useState } from "react";
-import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
-import SortableItem from "../components/SortableItem";
+import SortableItem from "./SortableItem";
 
-const RankingQuestion = ({ question, onSubmit }) => {
-  const [answers, setAnswers] = useState(question.answers);
+// Define types for props
+type Answer = {
+  id: string;
+  text: string;
+};
+
+type Question = {
+  questionText: string;
+  type: "ranking" | "scoring";
+  answers: Answer[];
+};
+
+type RankingQuestionProps = {
+  question: Question;
+  onSubmit: (response: Answer[]) => void;
+};
+
+const RankingQuestion: React.FC<RankingQuestionProps> = ({ question, onSubmit }) => {
+  const [answers, setAnswers] = useState<Answer[]>(question.answers);
 
   const sensors = useSensors(useSensor(PointerSensor));
 
