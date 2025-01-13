@@ -24,7 +24,7 @@ const AppQuiz = () => {
     setIsQuizStarted(true);
   };
 
-  const goToNextQuestion = (response: { id: string; text: string }[] | { id: string; text: string; score: number }[]) => {
+  const goToNextQuestion = () => {
     const nextIndex = currentQuestionIndex + 1;
 
     if (nextIndex < questions.length) {
@@ -96,9 +96,9 @@ const AppQuiz = () => {
         </h2>
         <p className="mb-4 text-gray-300">{currentQuestion.questionText}</p>
         {currentQuestion.type === "ranking" ? (
-          <RankingQuestion question={currentQuestion} onSubmit={(response) => goToNextQuestion(response)} />
+          <RankingQuestion question={currentQuestion} onSubmit={() => goToNextQuestion()} />
         ) : (
-          <ScoringQuestion question={currentQuestion} onSubmit={(response) => goToNextQuestion(response)} />
+          <ScoringQuestion question={currentQuestion} onSubmit={() => goToNextQuestion()} />
         )}
       </div>
     </div>
