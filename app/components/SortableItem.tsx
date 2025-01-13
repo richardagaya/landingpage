@@ -2,7 +2,13 @@ import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-const SortableItem = ({ id, children }) => {
+// Define types for props
+type SortableItemProps = {
+  id: string;
+  children: React.ReactNode;
+};
+
+const SortableItem: React.FC<SortableItemProps> = ({ id, children }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
   const style = {
