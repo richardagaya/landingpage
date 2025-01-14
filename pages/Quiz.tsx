@@ -1,4 +1,3 @@
-// pages/quiz.js
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { questions, isFullName, industryUrlMap } from '../helpers'; // Ensure correct path
@@ -14,7 +13,7 @@ const Quiz = () => {
     if (isFullName(userName)) {
       setIsNameEntered(true);
     } else {
-      alert("Please enter your full name.");
+      alert("Please enter a single name (e.g., first name).");
     }
   };
 
@@ -57,7 +56,7 @@ const Quiz = () => {
             type="text"
             value={userName}
             onChange={e => setUserName(e.target.value)}
-            placeholder="Full Name"
+            placeholder="Your Name"
             className="border p-2 rounded w-full mb-4"
           />
           <button onClick={handleNameSubmit} className="bg-gold hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded">
@@ -71,44 +70,43 @@ const Quiz = () => {
   const currentQuestion = questions[currentQuestionIndex];
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-darkblue">
-  <div className="w-full max-w-lg p-6 bg-white shadow-lg rounded-lg">
-    <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">
-      {currentQuestion.questionText}
-    </h1>
-    <div className="space-y-3">
-      {currentQuestion.answers.map((answer) => (
-        <button
-          key={answer.id}
-          onClick={() => handleAnswerSelect(answer)}
-          className={`w-full py-3 px-4 rounded-lg font-semibold transition-all duration-300 ${
-            selectedAnswers.includes(answer)
-              ? "bg-green-500 text-white"
-              : "bg-gray-200 hover:bg-yellow-500 hover:text-white"
-          }`}
-        >
-          {answer.text}
-        </button>
-      ))}
+      <div className="w-full max-w-lg p-6 bg-white shadow-lg rounded-lg">
+        <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">
+          {currentQuestion.questionText}
+        </h1>
+        <div className="space-y-3">
+          {currentQuestion.answers.map((answer) => (
+            <button
+              key={answer.id}
+              onClick={() => handleAnswerSelect(answer)}
+              className={`w-full py-3 px-4 rounded-lg font-semibold transition-all duration-300 ${
+                selectedAnswers.includes(answer)
+                  ? "bg-green-500 text-white"
+                  : "bg-gray-200 hover:bg-yellow-500 hover:text-white"
+              }`}
+            >
+              {answer.text}
+            </button>
+          ))}
+        </div>
+        <div className="flex justify-between items-center mt-6">
+          {currentQuestionIndex > 0 && (
+            <button
+              onClick={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
+              className="py-2 px-4 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-all duration-300"
+            >
+              Previous
+            </button>
+          )}
+          <button
+            onClick={handleNextQuestion}
+            className="py-2 px-6 rounded-lg bg-blue-200 text-white hover:bg-gold transition-all duration-300"
+          >
+            {currentQuestionIndex === questions.length - 1 ? "Finish Quiz" : "Next"}
+          </button>
+        </div>
+      </div>
     </div>
-    <div className="flex justify-between items-center mt-6">
-      {currentQuestionIndex > 0 && (
-        <button
-          onClick={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
-          className="py-2 px-4 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-all duration-300"
-        >
-          Previous
-        </button>
-      )}
-      <button
-        onClick={handleNextQuestion}
-        className="py-2 px-6 rounded-lg bg-blue-200 text-white hover:bg-gold transition-all duration-300"
-      >
-        {currentQuestionIndex === questions.length - 1 ? "Finish Quiz" : "Next"}
-      </button>
-    </div>
-  </div>
-</div>
-
   );
 };
 

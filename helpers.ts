@@ -13,6 +13,12 @@ export interface Question {
   answers: Answer[];
 }
 
+// helpers.ts
+export const isFullName = (name: string) => {
+  return name.trim().split(' ').length === 1; // Only one word
+};
+
+
 // Sample questions array with the Question type
 export const questions: Question[] = [
   {
