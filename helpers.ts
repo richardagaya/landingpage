@@ -1,9 +1,19 @@
-// helpers.js
-export const isFullName = (name: string) => {
-  return name.trim().split(' ').length > 1;
-};
+// helpers.ts
 
-// Questions Array
+// Define the structure for each answer
+export interface Answer {
+  id: string; // You have string ids for answers
+  text: string;
+}
+
+// Define the structure for each question
+export interface Question {
+  questionText: string;
+  type: string;
+  answers: Answer[];
+}
+
+// Sample questions array with the Question type
 export const questions: Question[] = [
   {
     questionText: "Who Success Story Inspires You The Most?",
@@ -41,6 +51,8 @@ export const questions: Question[] = [
     ],
   },
 ];
+
+// Industry URL mapping
 export const industryUrlMap = {
   "Ecommerce & Sales": "/SalesEcommerce",
   "Sales & Content Creation": "/SalesContentCreation",
