@@ -5,7 +5,7 @@ const IntroPage: React.FC = () => {
   const router = useRouter();
 
   const navigateToQuiz = (): void => {
-    router.push("/Quiz");
+    router.push("/Skillstest");
   };
 
   return (
