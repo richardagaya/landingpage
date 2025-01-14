@@ -1,14 +1,14 @@
+// SortableItem.tsx
 import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-// Define types for props
-type SortableItemProps = {
+interface SortableItemProps {
   id: string;
-  children: React.ReactNode;
-};
+  text: string;
+}
 
-const SortableItem: React.FC<SortableItemProps> = ({ id, children }) => {
+const SortableItem: React.FC<SortableItemProps> = ({ id, text }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
   const style = {
@@ -17,15 +17,9 @@ const SortableItem: React.FC<SortableItemProps> = ({ id, children }) => {
   };
 
   return (
-    <li
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      className="px-4 py-2 bg-gray-700 text-white rounded shadow cursor-pointer"
-    >
-      {children}
-    </li>
+    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+      {text}
+    </div>
   );
 };
 

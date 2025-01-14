@@ -1,82 +1,66 @@
-"use client";
-import React, { useState } from "react";
-import RankingQuestion from "../app/components/RankingQuestion";
-import ScoringQuestion from "../app/components/ScoringQuestion";
-import { questions, isFullName } from "../helpers";
+// pages/quiz.js
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { questions, isFullName, industryUrlMap } from '../helpers'; // Ensure correct path
 
-const AppQuiz = () => {
+const Quiz = () => {
   const [userName, setUserName] = useState("");
   const [isNameEntered, setIsNameEntered] = useState(false);
-  const [isQuizStarted, setIsQuizStarted] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-
-  const currentQuestion = questions[currentQuestionIndex] || null;
+  const [selectedAnswers, setSelectedAnswers] = useState([]); // Store selected answers for the last question
+  const router = useRouter();
 
   const handleNameSubmit = () => {
     if (isFullName(userName)) {
       setIsNameEntered(true);
     } else {
-      alert("Please enter your full name (at least two words).");
+      alert("Please enter your full name.");
     }
   };
 
-  const startQuiz = () => {
-    setIsQuizStarted(true);
+  const handleAnswerSelect = (answer) => {
+    if (currentQuestionIndex === questions.length - 1) { // Only for the last question
+      if (selectedAnswers.includes(answer)) {
+        setSelectedAnswers(selectedAnswers.filter(item => item !== answer));
+      } else if (selectedAnswers.length < 2) {
+        setSelectedAnswers([...selectedAnswers, answer]);
+      } else {
+        alert("You can only select two industries. Please deselect one before adding another.");
+      }
+    }
   };
 
-  const goToNextQuestion = () => {
-    const nextIndex = currentQuestionIndex + 1;
-
-    if (nextIndex < questions.length) {
-      setCurrentQuestionIndex(nextIndex);
+  const handleNextQuestion = () => {
+    if (currentQuestionIndex === questions.length - 1) {
+      if (selectedAnswers.length === 2) {
+        const sortedPair = selectedAnswers.map(a => a.text).sort().join(' & ');
+        const path = industryUrlMap[sortedPair];
+        if (path) {
+          router.push(path);
+        } else {
+          alert("No route found for the selected industries.");
+        }
+      } else {
+        alert("Please select exactly two industries.");
+      }
     } else {
-      alert("Quiz Completed!");
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
   };
 
   if (!isNameEntered) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-900">
-        <div className="w-96 bg-gray-800 text-white p-6 rounded-lg shadow-lg">
-          <h1 className="text-2xl font-bold mb-4">Welcome!</h1>
-          <label htmlFor="name" className="block mb-2 text-gray-300">
-            Please enter your full name to get started:
-          </label>
+      <div className="min-h-screen flex items-center justify-center bg-darkblue">
+        <div className="p-12 bg-white shadow-md rounded">
+          <h1 className="text-lg font-bold mb-4 text-gold">Enter your name to start the quiz</h1>
           <input
-            id="name"
             type="text"
-            className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white mb-4"
             value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            onChange={e => setUserName(e.target.value)}
+            placeholder="Full Name"
+            className="border p-2 rounded w-full mb-4"
           />
-          <button
-            onClick={handleNameSubmit}
-            disabled={!isFullName(userName)}
-            className={`w-full px-4 py-2 rounded ${
-              isFullName(userName)
-                ? "bg-yellow-500 hover:bg-yellow-600 text-white"
-                : "bg-gray-600 text-gray-400 cursor-not-allowed"
-            }`}
-          >
-            Submit Name
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isQuizStarted) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-900">
-        <div className="w-96 bg-gray-800 text-white p-6 rounded-lg shadow-lg">
-          <h1 className="text-2xl font-bold mb-4">
-            Hey, {userName}! Welcome!
-          </h1>
-          <p className="text-gray-300 mb-4">Click below to start your quiz.</p>
-          <button
-            onClick={startQuiz}
-            className="w-full px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
-          >
+          <button onClick={handleNameSubmit} className="bg-gold hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded">
             Start Quiz
           </button>
         </div>
@@ -84,25 +68,48 @@ const AppQuiz = () => {
     );
   }
 
-  if (!currentQuestion) {
-    return <div className="text-red-500">Error: Question not found!</div>;
-  }
-
+  const currentQuestion = questions[currentQuestionIndex];
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="w-96 bg-gray-800 text-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl font-semibold mb-2 text-yellow-500">
-          Question {currentQuestionIndex + 1}/{questions.length}
-        </h2>
-        <p className="mb-4 text-gray-300">{currentQuestion.questionText}</p>
-        {currentQuestion.type === "ranking" ? (
-          <RankingQuestion question={currentQuestion} onSubmit={goToNextQuestion} />
-        ) : (
-          <ScoringQuestion question={currentQuestion} onSubmit={goToNextQuestion} />
-        )}
-      </div>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-darkblue">
+  <div className="w-full max-w-lg p-6 bg-white shadow-lg rounded-lg">
+    <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">
+      {currentQuestion.questionText}
+    </h1>
+    <div className="space-y-3">
+      {currentQuestion.answers.map((answer) => (
+        <button
+          key={answer.id}
+          onClick={() => handleAnswerSelect(answer)}
+          className={`w-full py-3 px-4 rounded-lg font-semibold transition-all duration-300 ${
+            selectedAnswers.includes(answer)
+              ? "bg-green-500 text-white"
+              : "bg-gray-200 hover:bg-yellow-500 hover:text-white"
+          }`}
+        >
+          {answer.text}
+        </button>
+      ))}
     </div>
+    <div className="flex justify-between items-center mt-6">
+      {currentQuestionIndex > 0 && (
+        <button
+          onClick={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
+          className="py-2 px-4 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-all duration-300"
+        >
+          Previous
+        </button>
+      )}
+      <button
+        onClick={handleNextQuestion}
+        className="py-2 px-6 rounded-lg bg-blue-200 text-white hover:bg-gold transition-all duration-300"
+      >
+        {currentQuestionIndex === questions.length - 1 ? "Finish Quiz" : "Next"}
+      </button>
+    </div>
+  </div>
+</div>
+
   );
 };
 
-export default AppQuiz;
+export default Quiz;

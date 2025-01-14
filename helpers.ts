@@ -1,18 +1,6 @@
-export type Answer = {
-  id: string;
-  text: string;
-};
-
-export type Question = {
-  questionText: string;
-  type: "scoring" | "ranking"; // Define strict types for question type
-  answers: Answer[];
-};
-
-// Function to validate full name
-export const isFullName = (name: string): boolean => {
-  const words = name.trim().split(" ");
-  return words.length > 1 && words.every((word) => word.length > 0);
+// helpers.js
+export const isFullName = (name: string) => {
+  return name.trim().split(' ').length > 1;
 };
 
 // Questions Array
@@ -53,3 +41,8 @@ export const questions: Question[] = [
     ],
   },
 ];
+export const industryUrlMap = {
+  "Ecommerce & Sales": "/SalesEcommerce",
+  "Sales & Content Creation": "/SalesContentCreation",
+  // More mappings as necessary
+};

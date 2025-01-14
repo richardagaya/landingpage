@@ -1,15 +1,7 @@
-import HeroSection from "./components/Hero";
-import Testimonials from "./components/Testimonial";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-export default function Home() {
-  return (
-    <>
-    <Navbar/>
-    <HeroSection/>
-    <Testimonials/>
-    <Footer/>
-    </>
-    
-  );
-}
+import IntroPage from "../app/components/IntroPage";
+
+const Home: React.FC = () => {
+  return <IntroPage />;
+};
+
+export default Home;
