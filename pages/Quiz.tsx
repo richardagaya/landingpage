@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { questions, isFullName, industryUrlMap } from '../helpers'; // Ensure correct path
+import { questions, isFullName, industryUrlMap, Answer } from '../helpers'; // Ensure correct path
 
 const Quiz = () => {
   const [userName, setUserName] = useState("");
   const [isNameEntered, setIsNameEntered] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState([]); // Store selected answers for the last question
+  const [selectedAnswers, setSelectedAnswers] = useState<Answer[]>([]); // Store selected answers for the last question
   const router = useRouter();
 
   const handleNameSubmit = () => {
@@ -17,7 +17,7 @@ const Quiz = () => {
     }
   };
 
-  const handleAnswerSelect = (answer) => {
+  const handleAnswerSelect = (answer: Answer) => {
     if (currentQuestionIndex === questions.length - 1) { // Only for the last question
       if (selectedAnswers.includes(answer)) {
         setSelectedAnswers(selectedAnswers.filter(item => item !== answer));
@@ -33,7 +33,7 @@ const Quiz = () => {
     if (currentQuestionIndex === questions.length - 1) {
       if (selectedAnswers.length === 2) {
         const sortedPair = selectedAnswers.map(a => a.text).sort().join(' & ');
-        const path = industryUrlMap[sortedPair];
+        const path = industryUrlMap[sortedPair as keyof typeof industryUrlMap];
         if (path) {
           router.push(path);
         } else {
