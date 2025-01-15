@@ -17,7 +17,7 @@ export default {
         darkblue: "#020D23",
         basecolor:"#f1bf2a",
         first: "#1f2937",
-        darkbg: "#111827",
+        darkbg: "#1f2937",
         second: "#ffbf00",
       },
     },
