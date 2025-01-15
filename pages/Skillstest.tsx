@@ -77,7 +77,7 @@ const Quiz = () => {
         }}
       >
         <div className="p-8 bg-darkbg text-center rounded-lg shadow-md w-[90%] max-w-md">
-          <h1 className="text-2xl text-white font-semibold mb-6 tracking-wide">
+          <h1 className="text-2xl text-white font-semibold mb-6 tracking-wide font-sans">
             WHAT IS YOUR <span className="font-bold">NAME?</span>
           </h1>
           <div className="flex gap-4 justify-center mb-6">

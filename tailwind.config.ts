@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Lexend Deca', 'serif'], // For Google Fonts
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
