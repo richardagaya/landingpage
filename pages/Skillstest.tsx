@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { questions, industryUrlMap, Answer } from '../helpers'; // Ensure correct path
+import { questions, Answer } from '../helpers'; // Ensure correct path
 
 const Quiz = () => {
   const [firstName, setFirstName] = useState("");
@@ -53,7 +53,7 @@ const Quiz = () => {
     return (
       <div className="flex h-screen items-center justify-center bg-gray-900">
         <div className="p-6 bg-gray-800 text-center rounded shadow-lg">
-          <h1 className="text-xl text-white font-bold mb-4">What's your name?</h1>
+          <h1 className="text-xl text-white font-bold mb-4">Whats your name?</h1>
           <input
             type="text"
             value={firstName}
