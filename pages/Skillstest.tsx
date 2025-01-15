@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { questions, Answer } from '../helpers'; // Ensure correct path
+import { questions, Answer } from '../helpers'; // Ensure the path is correct
 
 const Quiz = () => {
   const [firstName, setFirstName] = useState("");
@@ -17,7 +17,7 @@ const Quiz = () => {
       setTimeout(() => {
         setIsLoading(false);
         setIsNameEntered(true);
-      }, 2000); // Simulate a loading time of 2 seconds
+      }, 2000);
     } else {
       alert("Please enter both your first and last names.");
     }
@@ -31,7 +31,7 @@ const Quiz = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      router.push('/results'); // Navigate to results page or handle quiz completion
+      router.push('/results');
     }
   };
 
@@ -39,46 +39,77 @@ const Quiz = () => {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-gray-900">
+      <div
+        className="flex h-screen items-center justify-center"
+        style={{
+          backgroundImage: "url('/background.png')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
         <div className="text-center text-white">
           <h1 className="text-xl md:text-3xl">Hey {fullName}!</h1>
           <p className="text-lg">Welcome to the Quiz!</p>
-          <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-32 w-32"></div>
+          {/* Spinner */}
+          <div className="loader ease-linear rounded-full border-8 border-gray-300 border-t-gold h-32 w-32 animate-spin mt-6"></div>
         </div>
       </div>
     );
   }
+  
 
   if (!isNameEntered) {
     return (
-      <div className="flex h-screen items-center justify-center bg-gray-900">
-        <div className="p-6 bg-gray-800 text-center rounded shadow-lg">
-          <h1 className="text-xl text-white font-bold mb-4">Whats your name?</h1>
-          <input
-            type="text"
-            value={firstName}
-            onChange={e => setFirstName(e.target.value)}
-            placeholder="First Name"
-            className="input bg-gray-700 text-white border border-gray-600 p-2 rounded w-full mb-4"
-          />
-          <input
-            type="text"
-            value={lastName}
-            onChange={e => setLastName(e.target.value)}
-            placeholder="Last Name"
-            className="input bg-gray-700 text-white border border-gray-600 p-2 rounded w-full mb-4"
-          />
-          <button onClick={handleNameSubmit} className="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Proceed
+      <div
+        className="flex h-screen items-center justify-center"
+        style={{
+          backgroundImage: "url('/background.png')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="p-8 bg-darkbg text-center rounded-lg shadow-md w-[90%] max-w-md">
+          <h1 className="text-2xl text-white font-semibold mb-6 tracking-wide">
+            WHAT IS YOUR <span className="font-bold">NAME?</span>
+          </h1>
+          <div className="flex gap-4 justify-center mb-6">
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              placeholder="FIRST NAME"
+              className="bg-first text-gray-300 border border-gray-700 px-4 py-3 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 uppercase tracking-wide w-[45%]"
+            />
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              placeholder="LAST NAME"
+              className="bg-first text-gray-300 border border-gray-700 px-4 py-3 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 uppercase tracking-wide w-[45%]"
+            />
+          </div>
+          <button
+            onClick={handleNameSubmit}
+            className="bg-basecolor hover:bg-second text-gray-900 font-bold py-3 px-6 rounded-full shadow-lg text-sm uppercase tracking-wider transition-all"
+          >
+            PROCEED
           </button>
         </div>
       </div>
     );
+    
   }
 
   const currentQuestion = questions[currentQuestionIndex];
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-900">
+    <div
+      className="flex h-screen items-center justify-center"
+      style={{
+        backgroundImage: "url('/background.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
       <div className="w-full max-w-xl p-6 bg-gray-800 text-center rounded shadow-lg">
         <h1 className="text-xl text-white font-bold mb-6">{currentQuestion.questionText}</h1>
         <div className="space-y-4">

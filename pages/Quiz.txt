@@ -1,0 +1,108 @@
+import React, { useState } from "react";
+import { DndProvider, useDrag, useDrop } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
+const ItemType = {
+  NAME: "name",
+};
+
+const DraggableItem = ({ name, imageUrl, isDraggable }) => {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemType.NAME,
+    item: { name },
+    canDrag: isDraggable,
+    collect: monitor => ({
+      isDragging: monitor.isDragging(),
+    }),
+  }));
+
+  return (
+    <div
+      ref={drag}
+      className={`flex items-center space-x-3 bg-gray-700 p-2 rounded-md cursor-pointer shadow-lg transition-opacity duration-200 ${
+        isDragging ? "opacity-50" : "opacity-100"
+      }`}
+    >
+      <img
+        src={imageUrl}
+        alt={name}
+        className="w-10 h-10 rounded-full object-cover"
+      />
+      <span className="text-white font-medium text-sm">{name}</span>
+    </div>
+  );
+};
+
+const DroppableBox = ({ index, onDrop, content }) => {
+  const [{ isOver }, drop] = useDrop(() => ({
+    accept: ItemType.NAME,
+    drop: (item) => onDrop(item, index),
+    collect: monitor => ({
+      isOver: monitor.isOver(),
+    }),
+  }));
+
+  return (
+    <div
+      ref={drop}
+      className={`flex flex-col items-center justify-center bg-gray-700 p-4 rounded-md shadow-lg border space-y-1 h-24 w-full ${
+        isOver ? "border-yellow-400" : "border-gray-500"
+      }`}
+    >
+      {content.length > 0 ? (
+        content.map((name, idx) => (
+          <div key={idx} className="text-sm text-yellow-400">{name}</div>
+        ))
+      ) : (
+        <span className="text-gray-400 text-sm">Drop here</span>
+      )}
+    </div>
+  );
+};
+
+const QuizPage = () => {
+  const [boxes, setBoxes] = useState([[], [], [], [], []]);
+  const [draggedItems, setDraggedItems] = useState({});
+
+  const handleDrop = (item, index) => {
+    console.log(`Dropped item: ${item.name} at box index: ${index}`);
+    const updatedBoxes = [...boxes];
+    if (!updatedBoxes[index].includes(item.name)) {
+      updatedBoxes[index].push(item.name);
+      setBoxes(updatedBoxes);
+      setDraggedItems({ ...draggedItems, [item.name]: true });
+    }
+  };
+
+  const namesWithImages = [
+    { name: "Tony Robbins", imageUrl: "/TonyRobbins.png" },
+    { name: "Mr. Beast", imageUrl: "/MrBeast.png" },
+    { name: "Warren Buffet", imageUrl: "/WarrenBuffet.png" },
+    { name: "Jeff Bezos", imageUrl: "/JeffBezos.png" },
+    { name: "Elon Musk", imageUrl: "/ElonMusk.png" },
+  ];
+
+  console.log("Boxes state:", boxes);
+  console.log("Dragged items state:", draggedItems);
+
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
+        <div className="w-full max-w-6xl p-6 bg-gray-800 rounded-lg shadow-lg grid grid-cols-2 gap-8">
+          <div className="space-y-4">
+            {boxes.map((content, index) => (
+              <DroppableBox key={index} index={index} onDrop={handleDrop} content={content} />
+            ))}
+          </div>
+          <div className="flex flex-col space-y-4 items-end">
+            {namesWithImages.map((person, index) => (
+              <DraggableItem key={index} name={person.name} imageUrl={person.imageUrl} isDraggable={!draggedItems[person.name]} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </DndProvider>
+  );
+};
+
+export default QuizPage;
