@@ -51,7 +51,7 @@ const Quiz = () => {
         }}
       >
         {/* Enlarged Box Container */}
-        <div className="bg-darkbg border border-gray-500 rounded-lg p-10 md:p-12 shadow-lg text-center text-white w-3/4 md:w-1/2 lg:w-1/3">
+        <div className="bg-darkbg  rounded-lg p-10 md:p-12 shadow-lg text-center text-white w-3/4 md:w-1/2 lg:w-1/3">
           {/* Adjust font sizes */}
           <h1 className={`${fontSize} font-bold mb-4`}>
             HEY <span className="text-gold">{fullName.toUpperCase()}!</span>
