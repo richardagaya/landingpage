@@ -69,7 +69,7 @@ const Quiz = () => {
             className="input bg-gray-700 text-white border border-gray-600 p-2 rounded w-full mb-4"
           />
           <button onClick={handleNameSubmit} className="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Let's Go
+            Proceed
           </button>
         </div>
       </div>
