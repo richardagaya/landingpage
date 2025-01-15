@@ -38,6 +38,9 @@ const Quiz = () => {
   const fullName = `${firstName} ${lastName}`;
 
   if (isLoading) {
+    // Determine font size dynamically based on name length
+    const fontSize = fullName.length > 15 ? 'text-lg md:text-2xl' : 'text-2xl md:text-4xl';
+  
     return (
       <div
         className="flex h-screen items-center justify-center"
@@ -47,17 +50,22 @@ const Quiz = () => {
           backgroundPosition: 'center',
         }}
       >
-        <div className="text-center text-white">
-          <h1 className="text-xl md:text-3xl">Hey {fullName}!</h1>
-          <p className="text-lg">Welcome to the Quiz!</p>
-          {/* Spinner */}
-          <div className="loader ease-linear rounded-full border-8 border-gray-300 border-t-gold h-32 w-32 animate-spin mt-6"></div>
+        {/* Enlarged Box Container */}
+        <div className="bg-darkbg border border-gray-500 rounded-lg p-10 md:p-12 shadow-lg text-center text-white w-3/4 md:w-1/2 lg:w-1/3">
+          {/* Adjust font sizes */}
+          <h1 className={`${fontSize} font-bold mb-4`}>
+            HEY <span className="text-gold">{fullName.toUpperCase()}!</span>
+          </h1>
+          <p className="text-base md:text-lg mb-8">Welcome to the Quiz!</p>
+          {/* Centered Spinner */}
+          <div className="flex justify-center">
+            <div className="loader ease-linear rounded-full border-8 border-gray-300 border-t-gold h-20 w-20 md:h-32 md:w-32 animate-spin"></div>
+          </div>
         </div>
       </div>
     );
   }
   
-
   if (!isNameEntered) {
     return (
       <div
