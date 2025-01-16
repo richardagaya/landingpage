@@ -7,7 +7,6 @@ body {
     font-family: 'Montserrat', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #b12a2a; /* Light grey background */
   }
   .loader {
     border-color: gray !important;
