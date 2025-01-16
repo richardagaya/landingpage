@@ -81,7 +81,7 @@ const QuizPage = () => {
   }, []);
 
   const navigateToNextQuestion = () => {
-    router.push("/Skillstest");
+    router.push("/TimedTest");
   };
 
   return (
