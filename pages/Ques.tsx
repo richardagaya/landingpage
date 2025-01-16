@@ -94,7 +94,7 @@ const QuizPage = () => {
              style={{ backgroundImage: "url('/background.png')", backgroundSize: "cover", backgroundPosition: "center center" }}>
           <div className="w-full max-w-4xl p-5 bg-gray-800 rounded-lg shadow-lg">
             <h1 className="text-xl font-semibold text-yellow-300 mb-4">
-              Who's Success Story Inspires You The Most?
+              Who Success Story Inspires You The Most?
             </h1>
             <div className="space-y-4">
               {names.map(person => (
