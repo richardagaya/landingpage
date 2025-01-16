@@ -50,7 +50,7 @@ const QuizPage = () => {
   const router = useRouter();
   const [names, setNames] = useState<NameItem[]>([
     { id: 'ecommerce', name: 'Ecommerce', imageUrl: '/Ecommerce.png' },
-    { id: 'sales', name: 'Sales', imageUrl: '/sales.png' },
+    { id: 'sales', name: 'Sales', imageUrl: '/Sales.png' },
     { id: 'content', name: 'Content Creation', imageUrl: '/Content Creation.png' },
     { id: 'programming', name: 'Programming', imageUrl: '/Software Development.png' },
     { id: 'trading', name: 'Trading', imageUrl: '/Trading.png' },

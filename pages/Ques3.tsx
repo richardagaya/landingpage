@@ -50,7 +50,7 @@ const QuizPage = () => {
   const router = useRouter();
   const [names, setNames] = useState<NameItem[]>([
     { id: 'ecommerce', name: 'Ecommerce', imageUrl: '/Ecommerce.png' },
-    { id: 'sales', name: 'Sales', imageUrl: '/sales.png' },
+    { id: 'sales', name: 'Sales', imageUrl: '/Sales.png' },
     { id: 'content', name: 'Content Creation', imageUrl: '/Content Creation.png' },
     { id: 'programming', name: 'Programming', imageUrl: '/Software Development.png' },
     { id: 'trading', name: 'Trading', imageUrl: '/Trading.png' },
@@ -82,7 +82,7 @@ const QuizPage = () => {
              style={{ backgroundImage: "url('/background.png')", backgroundSize: "cover", backgroundPosition: "center center" }}>
           <div className="w-full max-w-4xl p-5 bg-gray-800 rounded-lg shadow-lg">
             <h1 className="text-xl font-semibold text-yellow-300 mb-4">
-              It takes 1000 hours to gain financial freedom in any skill. Which of these industries do you have the most experience in?
+            Which industry would you be most excited to gain skill in?
             </h1>
             <div className="space-y-4">
               {names.map(person => (
