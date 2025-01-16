@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { questions, Answer } from '../helpers'; // Ensure the path is correct
 
 const Quiz = () => {
   const [firstName, setFirstName] = useState("");
