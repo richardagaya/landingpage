@@ -55,6 +55,7 @@ const DraggableItem = memo(({ index, name, imageUrl, moveItem }: DraggableItemPr
     </div>
   );
 });
+DraggableItem.displayName = "DraggableItem"; // Set display name for the component
 
 const QuizPage = () => {
   const router = useRouter();

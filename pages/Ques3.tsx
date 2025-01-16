@@ -56,11 +56,14 @@ const DraggableItem = memo(({ index, name, imageUrl, moveItem }: DraggableItemPr
   );
 });
 
+// Set display name for the memoized component
+DraggableItem.displayName = "DraggableItem";
+
 const QuizPage = () => {
   const router = useRouter();
   const [names, setNames] = useState([
     { name: "Ecommerce", imageUrl: "/Ecommerce.png" },
-    { name: "Sales", imageUrl: "/Sales.png" },
+    { name: "Sales", imageUrl: "/sales.png" },
     { name: "Content Creation", imageUrl: "/Content Creation.png" },
     { name: "Programming", imageUrl: "/Software Development.png" },
     { name: "Trading", imageUrl: "/Trading.png" },
@@ -78,7 +81,7 @@ const QuizPage = () => {
   }, []);
 
   const navigateToNextQuestion = () => {
-    router.push("/Ques2");
+    router.push("/Skillstest");
   };
 
   return (

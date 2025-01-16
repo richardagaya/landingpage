@@ -56,6 +56,9 @@ const DraggableItem = memo(({ index, name, imageUrl, moveItem }: DraggableItemPr
   );
 });
 
+// Set display name for the memoized component
+DraggableItem.displayName = "DraggableItem";
+
 const QuizPage = () => {
   const router = useRouter();
   const [names, setNames] = useState([
@@ -86,7 +89,7 @@ const QuizPage = () => {
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white" style={{ backgroundImage: "url('/background.png')", backgroundSize: "cover", backgroundPosition: "center center" }}>
         <div className="w-full max-w-6xl p-6 bg-gray-800 rounded-lg shadow-lg">
           <h1 className="text-lg md:text-xl font-semibold text-yellow-300 mb-4">
-          It takes 1000 hours to gain financial freedom in any skill, Which of these industries do you have the most experience in? 
+            It takes 1000 hours to gain financial freedom in any skill, Which of these industries do you have the most experience in?
           </h1>
           <div className="space-y-4">
             {names.map((person, index) => (

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, } from 'react';
 import { useRouter } from 'next/router';
 
 const Quiz = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [isNameEntered, setIsNameEntered] = useState(false);
+  const [isNameEntered, ] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
