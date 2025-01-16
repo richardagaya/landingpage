@@ -60,7 +60,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
           <div className="bg-basecolor h-2.5 rounded-full" style={{ width: `${progress * 100}%` }}></div>
         </div>
         {showText && (
-          <Link href="/Skillstest" passHref>
+          <Link href="/Test" passHref>
             <button className="bg-basecolor hover:bg-second text-gray-900 font-bold py-3 px-6 rounded-full shadow-lg text-sm uppercase tracking-wider transition-all mt-4">
               Take the Test
             </button>

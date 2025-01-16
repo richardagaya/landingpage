@@ -1,115 +1,99 @@
-import React, { useState, useCallback, memo } from "react";
-import { useRouter } from "next/router";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import update from "immutability-helper";
-
-const ItemType = {
-  NAME: "name",
-};
+import React, { useState, memo } from 'react';
+import { useRouter } from 'next/router';
+import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { SortableContext, useSortable, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 interface DraggableItemProps {
-  index: number;
+  id: string;
   name: string;
   imageUrl: string;
-  moveItem: (dragIndex: number, hoverIndex: number) => void;
 }
 
-const DraggableItem = memo(({ index, name, imageUrl, moveItem }: DraggableItemProps) => {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [, drop] = useDrop({
-    accept: ItemType.NAME,
-    hover(item: { type: string; index: number }) {
-      if (!ref.current) {
-        return;
-      }
-      const dragIndex = item.index;
-      const hoverIndex = index;
-      if (dragIndex === hoverIndex) {
-        return;
-      }
-      moveItem(dragIndex, hoverIndex);
-      item.index = hoverIndex;
-    },
-  });
+const DraggableItem = memo(({ id, name, imageUrl }: DraggableItemProps) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    isDragging,
+  } = useSortable({ id });
 
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemType.NAME,
-    item: { name, index },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  }));
-
-  drag(drop(ref));
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    opacity: isDragging ? 0.5 : 1,
+    cursor: 'grab',
+    padding: '12px',
+    margin: '4px 0', // increased spacing for touch accessibility
+    boxShadow: isDragging ? '0 5px 15px rgba(0,0,0,0.25)' : 'none',
+    background: isDragging ? '#333' : '#444', // visual feedback for dragging
+    transition: 'background 0.3s, box-shadow 0.3s, transform 0.3s',
+  };
 
   return (
-    <div
-      ref={ref}
-      className={`flex items-center space-x-3 bg-gray-700 p-3 rounded-md cursor-move shadow-lg transition-opacity duration-200 ${
-        isDragging ? "opacity-50" : "opacity-100"
-      }`}
-    >
+    <div ref={setNodeRef} style={style} {...listeners} {...attributes}
+         className="flex items-center space-x-3 rounded-md cursor-move">
       <img src={imageUrl} alt={name} className="w-12 h-12 rounded-full object-cover" />
-      <span className="text-white font-medium text-base">{name}</span>
+      <span className="text-white font-medium text-lg">{name}</span>
     </div>
   );
 });
-DraggableItem.displayName = "DraggableItem"; // Set display name for the component
+DraggableItem.displayName = 'DraggableItem';
 
 const QuizPage = () => {
   const router = useRouter();
   const [names, setNames] = useState([
-    { name: "Tony Robbins", imageUrl: "/Tony Robins.png" },
-    { name: "Mr. Beast", imageUrl: "/Mr Beast.png" },
-    { name: "Warren Buffet", imageUrl: "/Warren Buffet.png" },
-    { name: "Jeff Bezos", imageUrl: "/Jeff Bezos.png" },
-    { name: "Elon Musk", imageUrl: "/Elon Musk.png" },
+    { id: 'Tony Robins', name: 'Tony Robins', imageUrl: '/Tony Robins.png' },
+    { id: 'Jeff Bezos', name: 'Jeff Bezos', imageUrl: '/Jeff Bezos.png' },
+    { id: 'Mr.Beast', name: 'Mr.Beast', imageUrl: '/Mr Beast.png' },
+    { id: 'Elon Musk', name: 'Elon Musk', imageUrl: '/Elon Musk.png' },
+    { id: 'Warren Buffet', name: 'Warren Buffet', imageUrl: '/Warren Buffet.png' },
   ]);
 
-  const moveItem = useCallback((dragIndex: number, hoverIndex: number) => {
-    setNames((prevNames) =>
-      update(prevNames, {
-        $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, prevNames[dragIndex]],
-        ],
-      })
-    );
-  }, []);
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5, // Adjust distance for better touch device interaction
+      }
+    })
+  );
 
-  const navigateToNextQuestion = () => {
-    router.push("/Ques2");
+  const handleDragEnd = (event: { active: any; over: any; }) => {
+    const { active, over } = event;
+    if (active.id !== over.id) {
+      setNames((items) => {
+        const oldIndex = items.findIndex(item => item.id === active.id);
+        const newIndex = items.findIndex(item => item.id === over.id);
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
   };
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white" style={{ backgroundImage: "url('/background.png')", backgroundSize: "cover", backgroundPosition: "center center" }}>
-        <div className="w-full max-w-6xl p-6 bg-gray-800 rounded-lg shadow-lg">
-          <h1 className="text-lg md:text-xl font-semibold text-yellow-300 mb-4">
-            Rank the Following Success Stories by How Much They Inspire You
-          </h1>
-          <div className="space-y-4">
-            {names.map((person, index) => (
-              <DraggableItem
-                key={person.name}
-                index={index}
-                name={person.name}
-                imageUrl={person.imageUrl}
-                moveItem={moveItem}
-              />
-            ))}
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <SortableContext items={names.map(item => item.id)} strategy={verticalListSortingStrategy}>
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900"
+             style={{ backgroundImage: "url('/background.png')", backgroundSize: "cover", backgroundPosition: "center center" }}>
+          <div className="w-full max-w-4xl p-5 bg-gray-800 rounded-lg shadow-lg">
+            <h1 className="text-xl font-semibold text-yellow-300 mb-4">
+            Who's Success Story Inspires You The Most?
+            </h1>
+            <div className="space-y-4">
+              {names.map(person => (
+                <DraggableItem key={person.id} id={person.id} name={person.name} imageUrl={person.imageUrl} />
+              ))}
+            </div>
           </div>
-        </div>
 
-        <button
-          onClick={navigateToNextQuestion}
-          className="mt-8 px-6 py-3 bg-yellow-400 text-gray-900 font-semibold rounded-lg hover:bg-yellow-500 transition"
-        >
-          Next
-        </button>
-      </div>
-    </DndProvider>
+          <button
+            onClick={() => router.push("/Ques2")}
+            className="mt-10 px-6 py-3 bg-yellow-400 text-gray-900 font-semibold rounded-lg hover:bg-yellow-500 transition-colors"
+          >
+            Next
+          </button>
+        </div>
+      </SortableContext>
+    </DndContext>
   );
 };
 

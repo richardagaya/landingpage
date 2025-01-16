@@ -12,4 +12,14 @@ body {
     border-color: gray !important;
     border-top-color: gold !important;
   }
+  .draggable-item {
+    padding: 12px; /* Increase padding */
+    margin: 4px; /* Ensure some space between items */
+    font-size: 16px; /* Larger font size for better readability */
+  }
+  .dragging {
+    opacity: 0.75; /* Make the item semi-transparent */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* Add shadow for elevation effect */
+    transform: scale(1.05); /* Slightly increase the size */
+  }
   
