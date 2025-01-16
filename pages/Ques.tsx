@@ -1,11 +1,23 @@
 import React, { useState, memo } from 'react';
 import { useRouter } from 'next/router';
-import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { SortableContext, useSortable, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  UniqueIdentifier
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+  arrayMove
+} from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
 interface DraggableItemProps {
-  id: string;
+  id: UniqueIdentifier;
   name: string;
   imageUrl: string;
 }
@@ -24,9 +36,9 @@ const DraggableItem = memo(({ id, name, imageUrl }: DraggableItemProps) => {
     opacity: isDragging ? 0.5 : 1,
     cursor: 'grab',
     padding: '12px',
-    margin: '4px 0', // increased spacing for touch accessibility
+    margin: '4px 0',
     boxShadow: isDragging ? '0 5px 15px rgba(0,0,0,0.25)' : 'none',
-    background: isDragging ? '#333' : '#444', // visual feedback for dragging
+    background: isDragging ? '#333' : '#444',
     transition: 'background 0.3s, box-shadow 0.3s, transform 0.3s',
   };
 
@@ -40,9 +52,15 @@ const DraggableItem = memo(({ id, name, imageUrl }: DraggableItemProps) => {
 });
 DraggableItem.displayName = 'DraggableItem';
 
+interface NameItem {
+  id: UniqueIdentifier;
+  name: string;
+  imageUrl: string;
+}
+
 const QuizPage = () => {
   const router = useRouter();
-  const [names, setNames] = useState([
+  const [names, setNames] = useState<NameItem[]>([
     { id: 'Tony Robins', name: 'Tony Robins', imageUrl: '/Tony Robins.png' },
     { id: 'Jeff Bezos', name: 'Jeff Bezos', imageUrl: '/Jeff Bezos.png' },
     { id: 'Mr.Beast', name: 'Mr.Beast', imageUrl: '/Mr Beast.png' },
@@ -53,14 +71,14 @@ const QuizPage = () => {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 5, // Adjust distance for better touch device interaction
+        distance: 5,
       }
     })
   );
 
-  const handleDragEnd = (event: { active: any; over: any; }) => {
+  const handleDragEnd = (event: { active: { id: UniqueIdentifier }; over: { id: UniqueIdentifier } | null }) => {
     const { active, over } = event;
-    if (active.id !== over.id) {
+    if (over && active.id !== over.id) {
       setNames((items) => {
         const oldIndex = items.findIndex(item => item.id === active.id);
         const newIndex = items.findIndex(item => item.id === over.id);
@@ -76,7 +94,7 @@ const QuizPage = () => {
              style={{ backgroundImage: "url('/background.png')", backgroundSize: "cover", backgroundPosition: "center center" }}>
           <div className="w-full max-w-4xl p-5 bg-gray-800 rounded-lg shadow-lg">
             <h1 className="text-xl font-semibold text-yellow-300 mb-4">
-            Who's Success Story Inspires You The Most?
+              Who's Success Story Inspires You The Most?
             </h1>
             <div className="space-y-4">
               {names.map(person => (
