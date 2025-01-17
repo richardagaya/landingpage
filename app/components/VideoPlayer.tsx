@@ -33,19 +33,26 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
         <div className="p-4 text-center">
           <img src="/logo.jpg" alt="Logo" className="mx-auto h-12" />
         </div>
-        <ReactPlayer
-          ref={playerRef}
-          url={url}
-          width="100%"
-          height="100%"
-          playing
-          muted={false} // Ensure the video isn't muted (remove echo by avoiding duplicate playback)
-          controls={false} // Remove default player controls
-          playbackRate={playbackRate}
-          onProgress={handleProgress}
-          onDuration={setDuration}
-          progressInterval={500} // Update progress every 500ms
-        />
+        <div className="relative">
+          <ReactPlayer
+            ref={playerRef}
+            url={url}
+            width="100%"
+            height="100%"
+            playing
+            controls // Keep controls visible
+            playbackRate={playbackRate}
+            onProgress={handleProgress}
+            onDuration={setDuration}
+            progressInterval={500} // Update progress every 500ms
+          />
+          {/* Custom CSS to hide fullscreen button */}
+          <style jsx>{`
+            .react-player__controls .ytp-fullscreen-button {
+              display: none !important;
+            }
+          `}</style>
+        </div>
         <div className="flex justify-center gap-2 my-4">
           <button
             onClick={() => changePlaybackRate(1)}
