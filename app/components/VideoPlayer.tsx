@@ -1,8 +1,8 @@
 // components/VideoPlayer.tsx
 "use client";
-import React, { useState, useRef } from 'react';
-import ReactPlayer from 'react-player';
-import Link from 'next/link';
+import React, { useState, useRef } from "react";
+import ReactPlayer from "react-player";
+import Link from "next/link";
 
 interface VideoPlayerProps {
   url: string; // URL of the video
@@ -31,7 +31,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
     <div className="flex justify-center items-center h-screen">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full max-w-4xl">
         <div className="p-4 text-center">
-          <img src="/logo.jpg" alt="Logo" className="mx-auto h-12" /> {/* Adjust path and sizing as needed */}
+          <img src="/logo.jpg" alt="Logo" className="mx-auto h-12" />
         </div>
         <ReactPlayer
           ref={playerRef}
@@ -39,25 +39,38 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
           width="100%"
           height="100%"
           playing
-          controls
+          muted={false} // Ensure the video isn't muted (remove echo by avoiding duplicate playback)
+          controls={false} // Remove default player controls
           playbackRate={playbackRate}
           onProgress={handleProgress}
           onDuration={setDuration}
           progressInterval={500} // Update progress every 500ms
         />
         <div className="flex justify-center gap-2 my-4">
-          <button onClick={() => changePlaybackRate(1)} className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded">
+          <button
+            onClick={() => changePlaybackRate(1)}
+            className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded"
+          >
             1x
           </button>
-          <button onClick={() => changePlaybackRate(1.5)} className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded">
+          <button
+            onClick={() => changePlaybackRate(1.5)}
+            className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded"
+          >
             1.5x
           </button>
-          <button onClick={() => changePlaybackRate(2)} className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded">
+          <button
+            onClick={() => changePlaybackRate(2)}
+            className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded"
+          >
             2x
           </button>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 mx-4">
-          <div className="bg-basecolor h-2.5 rounded-full" style={{ width: `${progress * 100}%` }}></div>
+          <div
+            className="bg-basecolor h-2.5 rounded-full"
+            style={{ width: `${progress * 100}%` }}
+          ></div>
         </div>
         {showText && (
           <Link href="/Test" passHref>
