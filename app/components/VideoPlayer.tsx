@@ -9,7 +9,7 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
-  const [progress, setProgress] = useState<number>(0);
+  const [, setProgress] = useState<number>(0);
   const playerRef = useRef<ReactPlayer>(null);
 
   const handleProgress = (state: { played: number }) => {
