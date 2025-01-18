@@ -92,7 +92,7 @@ const Question = ({
         </DndContext>
         <button
           onClick={handleNext}
-          className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md"
+          className="mt-4 bg-basecolor hover:bg-second text-white font-bold py-2 px-4 rounded-md"
         >
           {isLastQuestion ? "Finish" : "Next"}
         </button>
