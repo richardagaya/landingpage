@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DndContext, closestCenter } from "@dnd-kit/core";
+import { DndContext, closestCenter, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
@@ -46,10 +46,10 @@ const Question = ({
   const [items, setItems] = useState(answers);
   const router = useRouter();
 
-  const handleDragEnd = (event: any) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
-    if (active.id !== over.id) {
+    if (active && over && active.id !== over.id) {
       setItems((prevItems) => {
         const oldIndex = prevItems.findIndex((item) => item.id === active.id);
         const newIndex = prevItems.findIndex((item) => item.id === over.id);
@@ -92,7 +92,7 @@ const Question = ({
         </DndContext>
         <button
           onClick={handleNext}
-          className="mt-4 bg-basecolor hover:bg-second text-white font-bold py-2 px-4 rounded-md"
+          className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md"
         >
           {isLastQuestion ? "Finish" : "Next"}
         </button>
