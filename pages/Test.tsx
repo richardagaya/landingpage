@@ -12,7 +12,7 @@ const Quiz = () => {
     if (firstName.trim() && lastName.trim()) {
       setIsLoading(true);
       setTimeout(() => {
-        router.push('/Ques'); // Redirect to the next page after loading
+        router.push('/Quiz'); // Redirect to the next page after loading
       }, 2000);
     } else {
       alert("Please enter both your first and last names.");
