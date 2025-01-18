@@ -3,7 +3,7 @@ import { DndContext, closestCenter, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
-import { useRouter } from "next/router";
+import router from "next/router";
 
 const SortableItem = ({ id, text, imageUrl }: { id: string; text: string; imageUrl: string }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
@@ -37,14 +37,15 @@ const Question = ({
   answers,
   nextQuestion,
   isLastQuestion = false,
+  onFinish, // Add an onFinish callback prop
 }: {
   questionText: string;
   answers: { id: string; text: string; imageUrl: string }[];
   nextQuestion?: string;
   isLastQuestion?: boolean;
+  onFinish?: (sortedAnswers: { id: string; text: string }[]) => void;
 }) => {
   const [items, setItems] = useState(answers);
-  const router = useRouter();
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -60,7 +61,11 @@ const Question = ({
 
   const handleNext = () => {
     if (isLastQuestion) {
-      alert("Thank you for completing the quiz!");
+      if (onFinish) {
+        onFinish(items); // Pass sorted items to the onFinish callback
+      } else {
+        alert("Thank you for completing the quiz!");
+      }
     } else if (nextQuestion) {
       router.push(nextQuestion);
     }
