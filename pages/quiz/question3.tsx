@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import TimedTest from "../TimedTest";
 
 const Question3 = () => {
-  const router = useRouter();
   const [showTimedTest, setShowTimedTest] = useState(false);
   const [targetPath, setTargetPath] = useState("");
 
