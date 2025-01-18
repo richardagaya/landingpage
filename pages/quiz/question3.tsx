@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Question from "@/app/components/Question";
-import { useRouter } from "next/router";
 import TimedTest from "../TimedTest";
 
 const Question3 = () => {
