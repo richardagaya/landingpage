@@ -19,7 +19,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
   return (
     <div
       className="flex justify-center items-center min-h-screen min-w-full bg-cover  bg-no-repeat"
-      style={{ backgroundImage: "url('/background.png')" }} // Replace with your image path
+      style={{ backgroundImage: "url('/')" }} // Replace with your image path
     >
       <div className="relative w-full max-w-4xl">
         <ReactPlayer
