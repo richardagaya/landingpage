@@ -18,8 +18,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
 
   return (
     <div
-      className="flex justify-center items-center h-screen w-screen bg-cover bg-center"
-      style={{ backgroundImage: "url('/background.jpg')" }} // Replace with your image path
+      className="flex justify-center items-center min-h-screen min-w-full bg-cover  bg-no-repeat"
+      style={{ backgroundImage: "url('/background.png')" }} // Replace with your image path
     >
       <div className="relative w-full max-w-4xl">
         <ReactPlayer
@@ -31,13 +31,15 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
           controls
           onProgress={handleProgress}
         />
-        <Link href="/Test" passHref>
-          <button
-            className=" bg-basecolor hover:bg-second text-gray-900 font-bold py-4 px-4 rounded-full shadow-lg text-xl"
-          >
-            Take the Test
-          </button>
-        </Link>
+        <div className="mt-4 flex justify-center">
+          <Link href="/Test" passHref>
+            <button
+              className="bg-basecolor hover:bg-second text-gray-900 font-bold py-4 px-4 rounded-full shadow-lg text-xl"
+            >
+              Take the Test
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
