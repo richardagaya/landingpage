@@ -141,7 +141,7 @@ const Quiz: React.FC = () => {
         </div>
       ) : (
         <div className="max-w-md w-full p-6 bg-gray-800 bg-opacity-80 rounded-md shadow-lg text-center">
-          <h2 className="text-xl font-bold mb-4">Time's Up!</h2>
+          <h2 className="text-xl font-bold mb-4">Time has expired</h2>
           <p className="mb-6">Thank you for completing the quiz.</p>
           <p className="font-semibold">
             Your Answers: {selectedOptions.join(", ")}
