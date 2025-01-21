@@ -1,4 +1,5 @@
 "use client";
+import router from "next/router";
 import React, { useState, useEffect } from "react";
 
 interface Question {
@@ -48,16 +49,17 @@ const Quiz: React.FC = () => {
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-  const [timeLeft, setTimeLeft] = useState(15); // Total quiz time in seconds
+  const [timeLeft, setTimeLeft] = useState(15); // Timer for each question
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [timeUp, setTimeUp] = useState(false);
 
-  // Handle global timer
+  // Handle timer for each question
   useEffect(() => {
     if (timeLeft > 0 && !quizCompleted) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
-    } else if (timeLeft === 0) {
-      setQuizCompleted(true);
+    } else if (timeLeft === 0 && !quizCompleted) {
+      setTimeUp(true);
     }
   }, [timeLeft, quizCompleted]);
 
@@ -70,9 +72,23 @@ const Quiz: React.FC = () => {
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setTimeLeft(15); // Reset timer for next question
+      setTimeUp(false); // Reset time-up status
     } else {
       setQuizCompleted(true);
     }
+  };
+
+  const handleRetakeQuiz = () => {
+    setCurrentQuestionIndex(0);
+    setSelectedOptions([]);
+    setTimeLeft(15);
+    setQuizCompleted(false);
+    setTimeUp(false);
+  };
+  
+  const handleViewResults = () => {
+    router.push("/results");
   };
 
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
@@ -83,7 +99,7 @@ const Quiz: React.FC = () => {
     <div
       className="min-h-screen flex justify-center items-center text-white"
       style={{
-        backgroundImage: "url('/background.png')", // Ensure the path to your image is correct
+        backgroundImage: "url('/background.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -91,15 +107,17 @@ const Quiz: React.FC = () => {
       {!quizCompleted ? (
         <div className="max-w-md w-full p-6 bg-gray-800 bg-opacity-80 rounded-md shadow-lg">
           <h2 className="text-lg font-bold text-center mb-4">
-            FOR THE SALES AND TRADING SKILLS TEST
+          SOFTWARE DEVELOPMENT AND ECOMMERCE
           </h2>
 
           {/* Timer */}
-          <div className="text-center mb-4">
-            <p className="text-lg font-bold">
-              Time Left: <span className="text-yellow-500">{timeLeft}s</span>
-            </p>
-          </div>
+          {!timeUp && (
+            <div className="text-center mb-4">
+              <p className="text-lg font-bold">
+                Time Left: <span className="text-yellow-500">{timeLeft}s</span>
+              </p>
+            </div>
+          )}
 
           {/* Progress Bar */}
           <div className="relative w-full h-4 bg-gray-600 rounded-full mb-4">
@@ -110,42 +128,62 @@ const Quiz: React.FC = () => {
           </div>
 
           {/* Question and Options */}
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold text-center mb-4">
-              {currentQuestion.text}
-            </h3>
-            <div className="space-y-4">
-              {currentQuestion.options.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleOptionSelect(option)}
-                  className={`block w-full py-3 px-4 text-center rounded-lg font-medium ${
-                    selectedOptions[currentQuestionIndex] === option
-                      ? "bg-yellow-500 text-gray-900"
-                      : "bg-gray-700 hover:bg-gray-600"
-                  }`}
-                >
-                  {option}
-                </button>
-              ))}
+          {!timeUp ? (
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold text-center mb-4">
+                {currentQuestion.text}
+              </h3>
+              <div className="space-y-4">
+                {currentQuestion.options.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleOptionSelect(option)}
+                    className={`block w-full py-3 px-4 text-center rounded-lg font-medium ${
+                      selectedOptions[currentQuestionIndex] === option
+                        ? "bg-yellow-500 text-gray-900"
+                        : "bg-gray-700 hover:bg-gray-600"
+                    }`}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-semibold text-red-500 mb-4">
+                Time is up!
+              </h3>
+            </div>
+          )}
 
           {/* Next Button */}
-          <button
-            onClick={handleNext}
-            className="w-full py-3 px-4 bg-yellow-500 text-gray-900 font-bold rounded-md hover:bg-yellow-400"
-          >
-            {currentQuestionIndex < questions.length - 1 ? "NEXT" : "FINISH"}
-          </button>
+          {!timeUp && (
+            <button
+              onClick={handleNext}
+              className="w-full py-3 px-4 bg-yellow-500 text-gray-900 font-bold rounded-md hover:bg-yellow-400"
+            >
+              {currentQuestionIndex < questions.length - 1 ? "NEXT" : "FINISH"}
+            </button>
+          )}
         </div>
       ) : (
         <div className="max-w-md w-full p-6 bg-gray-800 bg-opacity-80 rounded-md shadow-lg text-center">
-          <h2 className="text-xl font-bold mb-4">Time has expired!</h2>
+          <h2 className="text-xl font-bold mb-4">Quiz Completed!</h2>
           <p className="mb-6">Thank you for completing the quiz.</p>
-          <p className="font-semibold">
-            Your Answers: {selectedOptions.join(", ")}
-          </p>
+          <button
+              onClick={handleViewResults}
+              className="px-6 py-3 bg-yellow-500 text-black rounded-md hover:bg-yellow-400 mb-4"
+            >
+              View Results
+            </button>
+
+          <button
+            onClick={handleRetakeQuiz}
+            className="w-full py-3 px-4 bg-gray-700 text-white font-bold rounded-md hover:bg-gray-600"
+          >
+            Retake Quiz
+          </button>
         </div>
       )}
     </div>
