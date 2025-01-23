@@ -12,38 +12,38 @@ const Quiz: React.FC = () => {
   const questions: Question[] = [
     {
       id: 1,
-      text: "Would you rather spend 10 hours a day...",
-      options: ["Coding or Programming", "Studying charts and numbers"],
-    },
-    {
-      id: 2,
-      text: "How do you approach solving challenges?",
-      options: ["Go straight to ChatGPT", "Analyzing the market for decision making"],
-    },
-    {
-      id: 3,
-      text: "What excites you most about your work?",
-      options: ["Setting up systems that others can rely on", "Successfully predicting outcomes"],
-    },
-    {
-      id: 4,
-      text: "How would you convince someone?",
-      options: ["Using public information", "Using secret data"],
-    },
-    {
-      id: 5,
-      text: "Which activity do you enjoy the most?",
-      options: ["Testing systems to look for potential improvements", "Studying charts and numbers"],
-    },
-    {
-      id: 6,
       text: "What method would you use to find leads?",
       options: ["Researching the Market", "Automated Tools"],
     },
     {
-      id: 7,
+      id: 2,
       text: "When approaching a new opportunity, what excites you most?",
       options: ["Experimenting with systems", "Learning about new patterns and trends in the market"],
+    },
+    {
+      id: 3,
+      text: "Would you rather spend 10 hours a day...",
+      options: ["Coding or Programming", "Studying charts and numbers"],
+    },
+    {
+      id: 4,
+      text: "How do you approach solving challenges?",
+      options: ["Go straight to ChatGPT", "Analyzing the market for decision making"],
+    },
+    {
+      id: 5,
+      text: "What excites you most about your work?",
+      options: ["Setting up systems that others can rely on", "Successfully predicting outcomes"],
+    },
+    {
+      id: 6,
+      text: "How would you convince someone?",
+      options: ["Using public information", "Using secret data"],
+    },
+    {
+      id: 7,
+       text:"Which activity do you enjoy the most?",
+      options: ["Testing systems to look for potential improvements", "Studying charts and numbers"],
     },
   ];
 

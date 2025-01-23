@@ -12,38 +12,38 @@ const Quiz: React.FC = () => {
   const questions: Question[] = [
     {
       id: 1,
-      text: "Would you rather spend 10 hours a day...",
-      options: ["Talking to 100 people", "Producing Enjoyable Content"],
+      text: "Which would you prefer?",
+      options: ["Fun but noisy work", "Creativity in Silence"],
     },
     {
       id: 2,
-      text: "Which Skill are you better at??",
-      options: ["Listening", "Speaking"],
-    },
-    {
-      id: 3,
-      text: "At a concert would you rather...?",
-      options: ["Interact with others", "Film the experience"],
-    },
-    {
-      id: 4,
-      text: "Are you more Extrovert or Introvert?",
-      options: ["Extrovert", "Introvert"],
-    },
-    {
-      id: 5,
-      text: "Would you rather sell tickets or perform on stage?",
-      options: ["Sell tickets", "Perform on stage"],
-    },
-    {
-      id: 6,
       text: "How do you approach solving challenges?",
       options: ["Engage in conversations", "Making content to address the issues"],
     },
     {
+      id: 3,
+      text: "Which Skill are you better at??",
+      options: ["Listening", "Speaking"],
+    },
+    {
+      id: 4,
+      text: "At a concert would you rather...?",
+      options: ["Interact with others", "Film the experience"],
+    },
+    {
+      id: 5,
+      text: "Are you more Extrovert or Introvert?",
+      options: ["Extrovert", "Introvert"],
+    },
+    {
+      id: 6,
+      text: "Would you rather sell tickets or perform on stage?",
+      options: ["Sell tickets", "Perform on stage"],
+    },
+    {
       id: 7,
-      text: "Which would you prefer?",
-      options: ["Fun but noisy work", "Creativity in Silence"],
+      text: "Would you rather spend 10 hours a day...",
+      options: ["Talking to 100 people", "Producing Enjoyable Content"],
     },
   ];
 

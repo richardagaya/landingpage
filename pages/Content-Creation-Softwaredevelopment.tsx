@@ -12,38 +12,38 @@ const Quiz: React.FC = () => {
   const questions: Question[] = [
     {
       id: 1,
-      text: "Would you rather spend 10 hours a day...",
-      options: ["Producing Enjoyable Content", "Coding or Programming"]
-    },
-    {
-      id: 2,
-      text: "Would you rather design in the front end, or write code in the back end?",
-      options: ["Design in the front end", "Write code"]
-    },
-    {
-      id: 3,
-      text: "What type of work would you be leaning towards?",
-      options: ["Creative work", "Methodical work"]
-    },
-    {
-      id: 4,
-      text: "How would you convince someone?",
-      options: ["Through story telling", "Using data"]
-    },
-    {
-      id: 5,
-      text: "When approaching a new opportunity, what excites you most?",
-      options: ["Sharing ideas through content", "Experimenting with systems"]
-    },
-    {
-      id: 6,
       text: "How do you feel about privacy?",
       options: ["I choose fame", "I choose privacy"]
     },
     {
-      id: 7,
+      id: 2,
       text: "What method would you use to find leads?",
       options: ["Creating content with Call to Actions", "Automated Tools"]
+    },
+    {
+      id: 3,
+      text: "Would you rather spend 10 hours a day...",
+      options: ["Producing Enjoyable Content", "Coding or Programming"]
+    },
+    {
+      id: 4,
+      text: "Would you rather design in the front end, or write code in the back end?",
+      options: ["Design in the front end", "Write code"]
+    },
+    {
+      id: 5,
+      text: "What type of work would you be leaning towards?",
+      options: ["Creative work", "Methodical work"]
+    },
+    {
+      id: 6,
+      text: "How would you convince someone?",
+      options: ["Through story telling", "Using data"]
+    },
+    {
+      id: 7,
+      text: "When approaching a new opportunity, what excites you most?",
+      options: ["Sharing ideas through content", "Experimenting with systems"]
     }
   ];
 

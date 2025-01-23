@@ -12,41 +12,42 @@ const Quiz: React.FC = () => {
   const questions: Question[] = [
     {
       id: 1,
+      text: "How do you prefer to approach prospects?",
+      options: [
+        "Directly, Face-to-Face or Over Calls.",
+        "Automated Tools to Drive Engagement.",
+      ],
+    },
+    {
+      id: 2,
+      text: "How do you approach solving challenges?",
+      options: ["Engage in conversations", "Go straight to chatGPT"],
+    },
+    {
+      id: 3,
       text: "Would you rather spend 10 hours a day...",
       options: ["Talking to 100 people", "Coding or Programming"],
     },
     {
-      id: 2,
+      id: 4,
       text: "Are you more Extrovert or Introvert?",
       options: ["Extrovert", "Introvert"],
     },
     {
-      id: 3,
+      id: 5,
       text: "Would you rather work in an office or at home?",
       options: ["Office", "Home"],
     },
     {
-      id: 4,
+      id: 6,
       text: "What do you think is the most important in selling?",
       options: ["Energy", "CRM system"],
-    },
-    {
-      id: 5,
-      text: "Which activity do you enjoy the most?",
-      options: ["Negotiating or pitching ideas to others", "Optimizing systems"],
-    },
-    {
-      id: 6,
-      text: "How do you prefer to approach prospects?",
-      options: [
-        "Directly, face-to-face or over calls.",
-        "Using automated tools to drive engagement.",
-      ],
+
     },
     {
       id: 7,
-      text: "How do you approach solving challenges?",
-      options: ["Engage in conversations", "Go straight to chatGPT"],
+      text: "Which activity do you enjoy the most?",
+      options: ["Negotiating or pitching ideas to others", "Optimizing systems"],
     },
   ];
 

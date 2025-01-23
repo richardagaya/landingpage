@@ -12,38 +12,38 @@ const Quiz: React.FC = () => {
   const questions: Question[] = [
     {
       id: 1,
-      text: "How would you convince someone?",
-      options: ["Using Public Information", "Building Rapport"],
+      text: "Woul you rather design a store front or write coe in the backend",
+      options: ["Design the store", "Write the code"],
     },
     {
       id: 2,
-      text: "What is your preferred work environment?",
-      options: ["Collaborative", "Independent"],
+      text: "What method would you use to find leads?",
+      options: ["Advertising", "Automated Tools"],
     },
     {
       id: 3,
-      text: "How do you handle challenges?",
-      options: ["Strategic Planning", "Immediate Action"],
+      text: "Would you rather spend 10 hours a day",
+      options: ["Coding or Programming", "Comparing Prices Of Products"],
     },
     {
       id: 4,
-      text: "What motivates you most?",
-      options: ["Recognition", "Results"],
+      text: "How do you approach solving challenges",
+      options: ["Go straight to chatGPT", "Comparing Cost of Solutions"],
     },
     {
       id: 5,
-      text: "How do you approach negotiations?",
-      options: ["Finding Common Ground", "Firm Positions"],
+      text: "When Approaching a new opportunity what excites you the most?",
+      options: ["Experimenting with systems", "Exponential Growth in Sales with Merchandise"],
     },
     {
       id: 6,
-      text: "What is your leadership style?",
-      options: ["Guiding", "Directing"],
+      text: "How would you offer your service or product",
+      options: ["Demostrating How It works in Demo", "Working from Home and Making Ads"],
     },
     {
       id: 7,
-      text: "What is most important in a team?",
-      options: ["Trust", "Skills"],
+      text: "Which Method would you use to geet more sales?",
+      options: ["Creating Free Resources", "Using Affiliates To showcase Your Products"],
     },
   ];
 

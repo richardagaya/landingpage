@@ -12,38 +12,38 @@ const Quiz: React.FC = () => {
   const questions: Question[] = [
     {
       id: 1,
-      text: "Would you rather spend 10 hours a day...",
-      options: ["Talking to 100 people", "Studying charts and numbers"],
+      text: "How would you convince someone?",
+      options: ["Using Public information", "Building Rapport"],
     },
     {
       id: 2,
+      text: "What Method would you use to find leads",
+      options: ["Researching the Market.", "DM 200 people"],
+    },
+    {
+      id: 3,
+      text: "Would you rather spend 10 hours a day...",
+      options: ["Talking to 100 People", "Stuying Charts and Numbers"],
+    },
+    {
+      id: 4,
       text: "Are you more Extrovert or Introvert?",
       options: ["Extrovert", "Introvert"],
     },
     {
-      id: 3,
-      text: "Would you rather work in an office or at home?",
-      options: ["Office", "Home"],
-    },
-    {
-      id: 4,
-      text: "Which activity do you enjoy the most?",
-      options: ["Negotiating or pitching ideas to others", "Comparing Crypto Currencies"],
-    },
-    {
       id: 5,
-      text: "How do you approach solving challenges?",
-      options: ["Engage in conversations.", "Following Market Trends."],
+      text: "Would you rather work in an office or at home",
+      options: ["Office.", "Home."],
     },
     {
       id: 6,
-      text: "How would you convice someone?",
-      options: ["Using publlic information", "Buillding Rapport"],
+      text: "Which activity do you enjoy the most?",
+      options: ["Pitching ideas to others", "Comparing Cryptocurrencies"],
     },
     {
       id: 7,
-      text: "What Method would you use to find leads",
-      options: ["Researching the Market.", "DM 200 people"],
+      text: "How do you approach solving challenges?",
+      options: ["Engage in Conversations", "Follow Market Trends"],
     },
   ];
 

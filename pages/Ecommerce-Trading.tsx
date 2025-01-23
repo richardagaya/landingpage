@@ -12,38 +12,39 @@ const Quiz: React.FC = () => {
   const questions: Question[] = [
     {
       "id": 1,
-      "text": "Would you rather spend 10 hours a day...",
-      "options": ["Comparing prices of products", "Studying charts and numbers"]
-    },
-    {
-      "id": 2,
-      "text": "How do you approach solving challenges?",
-      "options": ["Comparing costs of solutions", "Analyzing the market for decision making"]
-    },
-    {
-      "id": 3,
-      "text": "When approaching a new opportunity, what excites you most?",
-      "options": ["Learning about new patterns and trends in the market", "Learning about new products in the marketplace"]
-    },
-    {
-      "id": 4,
-      "text": "You’re tasked with growing a new income stream. What’s your strategy?",
-      "options": ["Designing a product line, optimizing a storefront, and running free ad campaigns to boost sales", "Monitoring financial markets and making timely trades to capitalize on opportunities"]
-    },
-    {
-      "id": 5,
-      "text": "How do you prefer to manage risk when working toward a financial goal?",
-      "options": ["Testing and refining product offers, and adjusting prices", "Setting stop-loss orders, and diversifying trades"]
-    },
-    {
-      "id": 6,
       "text": "Which activity do you enjoy the most?",
       "options": ["Designing a storefront", "Studying charts and numbers"]
     },
     {
-      "id": 7,
+      "id": 2,
       "text": "How would you convince someone?",
       "options": ["Using public information", "Through Advertising"]
+    },
+    {
+      "id": 3,
+      "text": "Would you rather spend 10 hours a day...",
+      "options": ["Comparing prices of products", "Studying charts and numbers"]
+    },
+    {
+      "id": 4,
+      "text": "How do you approach solving challenges?",
+      "options": ["Comparing costs of solutions", "Analyzing the market for decision making"]
+
+    },
+    {
+      "id": 5,
+      "text": "When approaching a new opportunity, what excites you most?",
+      "options": ["Learning about new patterns and trends in the market", "Learning about new products in the marketplace"]
+    },
+    {
+      "id": 6,
+      "text": "How do you prefer to manage risk when working toward a financial goal?",
+      "options": ["Testing and refining product offers, and adjusting prices", "Setting stop-loss orders, and diversifying trades"]
+    },
+    {
+      "id": 7,
+      "text": "You’re tasked with growing a new income stream. What’s your strategy?",
+      "options": ["Designing a product line, optimizing a storefront, and running free ad campaigns to boost sales", "Monitoring financial markets and making timely trades to capitalize on opportunities"]
     }
   
   ];

@@ -12,38 +12,38 @@ const Quiz: React.FC = () => {
   const questions: Question[] = [
     {
       id: 1,
-      text: "Would you rather spend 10 hours a day...",
-      options: ["Talking to 100 people", "Comparing prices of products"],
-    },
-    {
-      id: 2,
-      text: "How do you approach solving challenges?",
-      options: ["Engage in conversations", "Researching Market Demand"],
-    },
-    {
-      id: 3,
-      text: "Are you more Extrovert or Introvert?",
-      options: ["Extrovert", "Introvert"],
-    },
-    {
-      id: 4,
-      text: "Would you rather develop networking skills or go viral?",
-      options: ["Networking skills", "I rather go viral"],
-    },
-    {
-      id: 5,
-      text: "What Method would you use to find leads?",
-      options: ["DM 100 People", "Advertising Products"],
-    },
-    {
-      id: 6,
       text: "How do you prefer communicating with your potential customers?",
       options: ["Calls and Messages", "Using Marketing tools"],
     },
     {
+      id: 2,
+      text: "What do you think is the most important is selling?",
+      options: ["Your Energy", " Your Brand Identity."],
+    },
+    {
+      id: 3,
+      text: "Would you rather spend 10 hours a day...",
+      options: ["Talking to 100 people", "Comparing prices of products"],
+    },
+    {
+      id: 4,
+      text: "How do you approach solving challenges?",
+      options: ["Engage in conversations", "Researching Market Demand"],
+    },
+    {
+      id: 5,
+      text: "Are you more Extrovert or Introvert?",
+      options: ["Extrovert", "Introvert"],
+    },
+    {
+      id: 6,
+      text: "Would you rather develop networking skills or go viral?",
+      options: ["Networking skills", "I rather go viral"],
+    },
+    {
       id: 7,
-      text: "What do you think is the most imporant is selling?",
-      options: ["Your Energy", "Brand Identity."],
+      text: "What Method would you use to find leads?",
+      options: ["DM 100 People", "Advertising Products"],
     },
   ];
 
