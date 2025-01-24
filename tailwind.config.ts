@@ -12,6 +12,9 @@ export default {
       fontFamily: {
         sans: ['Lexend Deca', 'serif'], // For Google Fonts
       },
+      backgroundImage: {
+        'dark-pattern': "url('/background-pattern.png')",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
