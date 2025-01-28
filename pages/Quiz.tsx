@@ -1,25 +1,48 @@
-"use client";
-import { useRouter } from "next/router";
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 
 const Quiz = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const goToQuestion = (questionNumber: number) => {
-    router.push(`/quiz/question${questionNumber}`);
+    setIsLoading(true); // Set loading state to true
+    setTimeout(() => {
+      router.push(`/quiz/question${questionNumber}`); // Redirect after 2 seconds
+    }, 2000);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="w-96 bg-gray-800 text-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl font-semibold mb-4">Welcome to the  skillstest</h2>
-        <p className="mb-6 text-gray-300">
-          Answer the following questions to determine your path to financial freedom.
-        </p>
+    <div
+      className="flex h-screen items-center justify-center"
+      style={{
+        backgroundImage: "url('/background.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <div className="p-8 bg-darkbg text-center rounded-lg shadow-md w-[90%] max-w-md">
+        <h1 className="text-2xl text-white font-semibold mb-6 tracking-wide font-sans">
+          WHAT IS YOUR <span className="font-bold">NAME?</span>
+        </h1>
+        <div className="flex gap-4 justify-center mb-6">
+          <input
+            type="text"
+            placeholder="FIRST NAME"
+            className="bg-first text-gray-300 border border-gray-700 px-4 py-3 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 uppercase tracking-wide w-[45%]"
+          />
+          <input
+            type="text"
+            placeholder="LAST NAME"
+            className="bg-first text-gray-300 border border-gray-700 px-4 py-3 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 uppercase tracking-wide w-[45%]"
+          />
+        </div>
         <button
-          onClick={() => goToQuestion(1)}
+          onClick={() => goToQuestion(1)} // Redirect to question 1 after 2 seconds
           className="w-full bg-basecolor hover:bg-second text-white py-2 rounded-md"
+          disabled={isLoading} // Disable the button during loading
         >
-          Start Quiz
+          {isLoading ? 'Redirecting...' : 'PROCEED'} {/* Show "Redirecting..." during loading */}
         </button>
       </div>
     </div>

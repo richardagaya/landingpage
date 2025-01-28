@@ -21,13 +21,15 @@ const SortableItem = ({ id, text, imageUrl }: { id: string; text: string; imageU
       {...listeners}
       className="bg-gray-700 p-3 rounded-md flex items-center space-x-3 shadow-lg"
     >
-      <img
-        src={imageUrl}
-        alt={text}
-        className="w-10 h-10 object-cover rounded-md"
-      />
-      <span className="text-white font-medium">{text}</span>
-      <span className="text-gray-400 cursor-move ml-auto">⋮⋮</span>
+      <div className="flex items-center space-x-3">
+        <img
+          src={imageUrl}
+          alt={text}
+          className="w-10 h-10 object-cover rounded-md"
+        />
+        <span className="text-white font-medium">{text}</span>
+      </div>
+      <span className="text-yellow-400 cursor-move">⇵</span>
     </div>
   );
 };
@@ -95,12 +97,14 @@ const Question = ({
             </div>
           </SortableContext>
         </DndContext>
+        <div className="flex justify-center">
         <button
           onClick={handleNext}
-          className="mt-4 bg-basecolor hover:bg-second text-white font-bold py-2 px-4 rounded-md"
+           className=" mt-4 bg-basecolor hover:bg-second text-gray-900 font-bold py-2 px-8 rounded-full shadow-lg text-xl"
         >
           {isLastQuestion ? "Finish" : "Next"}
         </button>
+        </div>
       </div>
     </div>
   );
