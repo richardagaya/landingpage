@@ -12,38 +12,38 @@ const Quiz: React.FC = () => {
   const questions: Question[] = [
     {
       id: 1,
-      text: "How would you convince someone?",
-      options: ["Using Public Information", "Building Rapport"],
+      text: "How would you offfer your service or product?",
+      options: ["Consistently Posting on Social Media", "Working from Home and Making Ads"],
     },
     {
       id: 2,
-      text: "What is your preferred work environment?",
-      options: ["Collaborative", "Independent"],
+      text: "When Approaching a new opportunity what excites you the most?",
+      options: ["Learning about new Products in the market", "Building a following through content"],
     },
     {
       id: 3,
-      text: "How do you handle challenges?",
-      options: ["Strategic Planning", "Immediate Action"],
+      text: "Would you rather spend 10 hours a day",
+      options: ["Comparing piees of products", "Producing Enjoyable Content"],
     },
     {
       id: 4,
-      text: "What motivates you most?",
-      options: ["Recognition", "Results"],
+      text: "How do you approach solving challenges",
+      options: ["Making Content to Address the Issues", "Comparing Costs of Solutions"],
     },
     {
       id: 5,
-      text: "How do you approach negotiations?",
-      options: ["Finding Common Ground", "Firm Positions"],
+      text: "How do you convince someone?",
+      options: [" Through Avertisements", "Creating an expose In the form of a video"],
     },
     {
       id: 6,
-      text: "What is your leadership style?",
-      options: ["Guiding", "Directing"],
+      text: "What method would you use to find leads?",
+      options: ["Creating content with CTA's", "Advertising"],
     },
     {
       id: 7,
-      text: "What is most important in a team?",
-      options: ["Trust", "Skills"],
+      text: "Which activity do you enjoy the most?",
+      options: ["Making youtube videos", "Designing a storefront"],
     },
   ];
 
@@ -91,7 +91,7 @@ const Quiz: React.FC = () => {
       {!quizCompleted ? (
         <div className="max-w-md w-full p-6 bg-gray-800 bg-opacity-80 rounded-md shadow-lg">
           <h2 className="text-lg font-bold text-center mb-4">
-            CONTENT CREATION AND ECOMMERCE
+           ECOMMERCE AND CONTENT CREATION QUIZ
           </h2>
 
           {/* Progress Bar */}

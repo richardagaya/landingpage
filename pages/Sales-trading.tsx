@@ -91,7 +91,7 @@ const Quiz: React.FC = () => {
       {!quizCompleted ? (
         <div className="max-w-md w-full p-6 bg-gray-800 bg-opacity-80 rounded-md shadow-lg">
           <h2 className="text-lg font-bold text-center mb-4">
-            CONTENT CREATION AND ECOMMERCE
+            SALES AND TRADING QUIZ
           </h2>
 
           {/* Progress Bar */}

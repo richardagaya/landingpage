@@ -42,8 +42,8 @@ const Quiz: React.FC = () => {
   },
   {
     id: 7,
-     text:"Which activity do you enjoy the most?",
-    options: ["Testing systems to look for potential improvements", "Studying charts and numbers"],
+     text:"What activity do you enjoy the most?",
+    options: ["Testing systems to look for  improvements", "Studying charts and numbers"],
   },
   ];
 
@@ -91,7 +91,7 @@ const Quiz: React.FC = () => {
       {!quizCompleted ? (
         <div className="max-w-md w-full p-6 bg-gray-800 bg-opacity-80 rounded-md shadow-lg">
           <h2 className="text-lg font-bold text-center mb-4">
-            CONTENT CREATION AND ECOMMERCE
+            SOFTWARE DEVELOPMENT AND TRADING QUIZ
           </h2>
 
           {/* Progress Bar */}

@@ -34,7 +34,7 @@ const Quiz: React.FC = () => {
     {
       "id": 5,
       "text": "When approaching a new opportunity, what excites you most?",
-      "options": ["Learning about new patterns and trends in the market", "Learning about new products in the marketplace"]
+      "options": ["Learning about new patterns and trends", "Learning about new products in the market"]
     },
     {
       "id": 6,
@@ -44,7 +44,7 @@ const Quiz: React.FC = () => {
     {
       "id": 7,
       "text": "You’re tasked with growing a new income stream. What’s your strategy?",
-      "options": ["Designing a product line, optimizing a storefront, and running free ad campaigns to boost sales", "Monitoring financial markets and making timely trades to capitalize on opportunities"]
+      "options": ["Optimizing A store Product line and Ads ", "Make Timely Trades Capitalizing Opportunities"]
     },
   ];
 
@@ -92,7 +92,7 @@ const Quiz: React.FC = () => {
       {!quizCompleted ? (
         <div className="max-w-md w-full p-6 bg-gray-800 bg-opacity-80 rounded-md shadow-lg">
           <h2 className="text-lg font-bold text-center mb-4">
-            CONTENT CREATION AND ECOMMERCE
+            CONTENT CREATION AND TRADING QUIZ
           </h2>
 
           {/* Progress Bar */}

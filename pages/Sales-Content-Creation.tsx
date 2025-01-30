@@ -12,38 +12,38 @@ const Quiz: React.FC = () => {
   const questions: Question[] = [
     {
       id: 1,
-      text: "Which would you prefer?",
-      options: ["Fun but noisy work", "Creativity in Silence"],
+      text: "Would you rather spend 10 hours a day...",
+      options: ["Talking to 100 people", "Producing Enjoyable Content"],
     },
     {
       id: 2,
-      text: "How do you approach solving challenges?",
-      options: ["Engage in conversations", "Making content to address the issues"],
-    },
-    {
-      id: 3,
-      text: "Which Skill are you better at??",
+      text: "Which Skill are you better at?",
       options: ["Listening", "Speaking"],
     },
     {
-      id: 4,
+      id: 3,
       text: "At a concert would you rather...?",
       options: ["Interact with others", "Film the experience"],
     },
     {
-      id: 5,
+      id: 4,
       text: "Are you more Extrovert or Introvert?",
       options: ["Extrovert", "Introvert"],
     },
     {
-      id: 6,
+      id: 5,
       text: "Would you rather sell tickets or perform on stage?",
-      options: ["Sell tickets", "Perform on stage"],
+      options: ["Sell tickets", "Perform"],
+    },
+    {
+      id: 6,
+      text: "Which would you prefer",
+      options: ["Fun but Noisy Work", "Creativity In silence"],
     },
     {
       id: 7,
-      text: "Would you rather spend 10 hours a day...",
-      options: ["Talking to 100 people", "Producing Enjoyable Content"],
+      text: "How do you approach solving challenges?",
+      options: ["Engage in conversations", "Making content to address the issues"],
     },
   ];
 
@@ -91,7 +91,7 @@ const Quiz: React.FC = () => {
       {!quizCompleted ? (
         <div className="max-w-md w-full p-6 bg-gray-800 bg-opacity-80 rounded-md shadow-lg">
           <h2 className="text-lg font-bold text-center mb-4">
-            CONTENT CREATION AND ECOMMERCE
+           SALES CONTENT CREATION QUIZ
           </h2>
 
           {/* Progress Bar */}
