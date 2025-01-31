@@ -11,7 +11,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!name || !email || !answers) {
     return res.status(400).json({ error: "Missing fields" });
   }
-
   // Create email content
   const emailBody = `
     <h2>New Quiz Submission</h2>
