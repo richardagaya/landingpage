@@ -1,5 +1,5 @@
 "use client";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 interface Question {
@@ -9,41 +9,43 @@ interface Question {
 }
 
 const Quiz: React.FC = () => {
+  const router = useRouter();
+
   const questions: Question[] = [
     {
       id: 1,
-      text: "How would you offfer your service or product?",
+      text: "How would you offer your service or product?",
       options: ["Consistently Posting on Social Media", "Working from Home and Making Ads"],
     },
     {
       id: 2,
-      text: "When Approaching a new opportunity what excites you the most?",
+      text: "When approaching a new opportunity, what excites you the most?",
       options: ["Learning about new Products in the market", "Building a following through content"],
     },
     {
       id: 3,
-      text: "Would you rather spend 10 hours a day",
-      options: ["Comparing piees of products", "Producing Enjoyable Content"],
+      text: "Would you rather spend 10 hours a day?",
+      options: ["Comparing prices of products", "Producing enjoyable content"],
     },
     {
       id: 4,
-      text: "How do you approach solving challenges",
-      options: ["Making Content to Address the Issues", "Comparing Costs of Solutions"],
+      text: "How do you approach solving challenges?",
+      options: ["Making content to address the issues", "Comparing costs of solutions"],
     },
     {
       id: 5,
       text: "How do you convince someone?",
-      options: [" Through Avertisements", "Creating an expose In the form of a video"],
+      options: ["Through advertisements", "Creating an expose in the form of a video"],
     },
     {
       id: 6,
       text: "What method would you use to find leads?",
-      options: ["Creating content with CTA's", "Advertising"],
+      options: ["Creating content with CTAs", "Advertising"],
     },
     {
       id: 7,
       text: "Which activity do you enjoy the most?",
-      options: ["Making youtube videos", "Designing a storefront"],
+      options: ["Making YouTube videos", "Designing a storefront"],
     },
   ];
 
@@ -62,6 +64,7 @@ const Quiz: React.FC = () => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
       setQuizCompleted(true);
+      sendResults(); // Send results when quiz is completed
     }
   };
 
@@ -71,12 +74,21 @@ const Quiz: React.FC = () => {
     setQuizCompleted(false);
   };
 
-  const handleViewResults = () => {
-    router.push("/results");
+  const sendResults = async () => {
+    try {
+      await fetch("/api/send-results", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ answers: selectedOptions }),
+      });
+    } catch (error) {
+      console.error("Error sending results:", error);
+    }
   };
 
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
-
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
@@ -91,7 +103,7 @@ const Quiz: React.FC = () => {
       {!quizCompleted ? (
         <div className="max-w-md w-full p-6 bg-gray-800 bg-opacity-80 rounded-md shadow-lg">
           <h2 className="text-lg font-bold text-center mb-4">
-           ECOMMERCE AND CONTENT CREATION QUIZ
+            ECOMMERCE AND CONTENT CREATION QUIZ
           </h2>
 
           {/* Progress Bar */}
@@ -136,12 +148,6 @@ const Quiz: React.FC = () => {
         <div className="max-w-md w-full p-6 bg-gray-800 bg-opacity-80 rounded-md shadow-lg text-center">
           <h2 className="text-xl font-bold mb-4">Quiz Completed!</h2>
           <p className="mb-6">Thank you for completing the quiz.</p>
-          <button
-            onClick={handleViewResults}
-            className="px-6 py-3 bg-yellow-500 text-black rounded-md hover:bg-yellow-400 mb-4"
-          >
-            View Results
-          </button>
 
           <button
             onClick={handleRetakeQuiz}
