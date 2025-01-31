@@ -6,31 +6,37 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { answers } = req.body;
+  const { name, email, answers } = req.body;
+
+  if (!name || !email || !answers) {
+    return res.status(400).json({ error: "Missing fields" });
+  }
 
   // Create email content
   const emailBody = `
-    <h2>User Quiz Results</h2>
-    <p>Here are the answers selected by the user:</p>
+    <h2>New Quiz Submission</h2>
+    <p><strong>Name:</strong> ${name}</p>
+    <p><strong>Email:</strong> ${email}</p>
+    <h3>Quiz Answers:</h3>
     <ul>
-      ${answers.map((answer: string, index: number) => `<li>Q${index + 1}: ${answer}</li>`).join("")}
+      ${answers.map((answer: string, index: number) => `<li><strong>Q${index + 1}:</strong> ${answer}</li>`).join("")}
     </ul>
   `;
 
   try {
     // Configure email transporter
     const transporter = nodemailer.createTransport({
-      service: "gmail", // Or use SMTP
+      service: "gmail", // Or use SMTP settings
       auth: {
         user: process.env.EMAIL_USER, // Your email
-        pass: process.env.EMAIL_PASS, // Your app password (if using Gmail)
+        pass: process.env.EMAIL_PASS, // App password (if using Gmail)
       },
     });
 
     // Send email
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
-      to: "richardagaya278@gmail.com", // Change this to your email
+      to: "richardagaya278@gmail.com", // Replace with your email
       subject: "New Quiz Results",
       html: emailBody,
     });

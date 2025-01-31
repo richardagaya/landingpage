@@ -8,7 +8,6 @@ interface Question {
 }
 
 const Quiz: React.FC = () => {
-
   const questions: Question[] = [
     {
       id: 1,
@@ -50,6 +49,9 @@ const Quiz: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   const handleOptionSelect = (option: string) => {
     const updatedSelections = [...selectedOptions];
@@ -62,7 +64,6 @@ const Quiz: React.FC = () => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
       setQuizCompleted(true);
-      sendResults(); // Send results when quiz is completed
     }
   };
 
@@ -70,17 +71,31 @@ const Quiz: React.FC = () => {
     setCurrentQuestionIndex(0);
     setSelectedOptions([]);
     setQuizCompleted(false);
+    setSubmitted(false);
+    setName("");
+    setEmail("");
   };
 
-  const sendResults = async () => {
+  const handleViewResults = async () => {
+    if (!name || !email) {
+      alert("Please enter your name and email.");
+      return;
+    }
+
     try {
-      await fetch("/api/send-results", {
+      const response = await fetch("/api/send-results", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ answers: selectedOptions }),
+        body: JSON.stringify({ name, email, answers: selectedOptions }),
       });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        console.error("Failed to send results");
+      }
     } catch (error) {
       console.error("Error sending results:", error);
     }
@@ -104,7 +119,6 @@ const Quiz: React.FC = () => {
             ECOMMERCE AND CONTENT CREATION QUIZ
           </h2>
 
-          {/* Progress Bar */}
           <div className="relative w-full h-4 bg-gray-600 rounded-full mb-4">
             <div
               className="absolute top-0 left-0 h-4 bg-yellow-500 rounded-full"
@@ -112,7 +126,6 @@ const Quiz: React.FC = () => {
             ></div>
           </div>
 
-          {/* Question and Options */}
           <div className="mb-6">
             <h3 className="text-xl font-semibold text-center mb-4">
               {currentQuestion.text}
@@ -134,7 +147,6 @@ const Quiz: React.FC = () => {
             </div>
           </div>
 
-          {/* Next Button */}
           <button
             onClick={handleNext}
             className="w-full py-3 px-4 bg-yellow-500 text-gray-900 font-bold rounded-md hover:bg-yellow-400"
@@ -142,18 +154,15 @@ const Quiz: React.FC = () => {
             {currentQuestionIndex < questions.length - 1 ? "NEXT" : "FINISH"}
           </button>
         </div>
-      ) : (
+      ) : !submitted ? (
         <div className="max-w-md w-full p-6 bg-gray-800 bg-opacity-80 rounded-md shadow-lg text-center">
-          <h2 className="text-xl font-bold mb-4">Quiz Completed!</h2>
-          <p className="mb-6">Thank you for completing the quiz.</p>
-
-          <button
-            onClick={handleRetakeQuiz}
-            className="w-full py-3 px-4 bg-gray-700 text-white font-bold rounded-md hover:bg-gray-600"
-          >
-            Retake Quiz
-          </button>
+          <h2 className="text-xl font-bold mb-4">Enter Your Details</h2>
+          <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} className="w-full p-2 mb-4 bg-gray-700 text-white rounded"/>
+          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full p-2 mb-4 bg-gray-700 text-white rounded"/>
+          <button onClick={handleViewResults} className="w-full py-3 bg-yellow-500 text-gray-900 font-bold rounded-md">View Results</button>
         </div>
+      ) : (
+        <p className="text-center">Results sent successfully!</p>
       )}
     </div>
   );
