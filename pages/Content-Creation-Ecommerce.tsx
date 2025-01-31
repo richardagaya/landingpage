@@ -67,14 +67,6 @@ const Quiz: React.FC = () => {
     }
   };
 
-  const handleRetakeQuiz = () => {
-    setCurrentQuestionIndex(0);
-    setSelectedOptions([]);
-    setQuizCompleted(false);
-    setSubmitted(false);
-    setName("");
-    setEmail("");
-  };
 
   const handleViewResults = async () => {
     if (!name || !email) {
