@@ -9,7 +9,6 @@ interface Question {
 }
 
 const Quiz: React.FC = () => {
-  const router = useRouter();
 
   const questions: Question[] = [
     {
